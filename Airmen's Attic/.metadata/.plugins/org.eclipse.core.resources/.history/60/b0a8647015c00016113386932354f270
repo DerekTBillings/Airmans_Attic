@@ -1,0 +1,12 @@
+package com.billings.jdbc.sql;
+
+public class RafflePageSQL {
+	
+	public static String getPendingRaffleItems = "SELECT i.Raffle_Id, i.Name, i.Description, t.Type_Name, i.Status, i.Date_In, i.Date_Raffled, i.Date_To_Raffle "+
+		"FROM raffle_item i "+
+		"INNER JOIN item_type t on i.Type_Id = t.Type_Id "+
+		"WHERE Date_Raffled is null";
+	
+	
+			
+}

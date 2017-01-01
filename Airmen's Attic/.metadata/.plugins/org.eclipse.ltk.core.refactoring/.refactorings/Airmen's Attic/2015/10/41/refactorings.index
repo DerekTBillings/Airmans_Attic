@@ -1,0 +1,12 @@
+1444070584629	Move compilation unit
+1444070812642	Rename resource 'TestFXML.fxml'
+1444070839653	Rename type 'TestController'
+1444071438032	Rename type 'SceneFactory'
+1444073377318	Move compilation unit
+1444073564596	Move compilation unit
+1444077593512	Rename field 'customerCheckOutBtn'
+1444078438631	Delete element
+1444078443108	Delete element
+1444147230873	Rename type 'SceneUtils'
+1444152623505	Rename local variable 'callingThreadClass'
+1444152671883	Rename type 'UIUtils'

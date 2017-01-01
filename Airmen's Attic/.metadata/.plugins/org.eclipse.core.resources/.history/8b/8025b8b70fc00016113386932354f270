@@ -1,0 +1,54 @@
+package com.billings.controllers;
+
+import java.net.URL;
+import java.util.ResourceBundle;
+
+import com.billings.resources.RafflePageResources;
+
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
+
+public class RafflePageController implements Initializable {
+
+	@FXML
+	Label raffleHeaderLbl;
+	@FXML
+	Label raffleItemListLbl;
+	@FXML
+	Label itemDescriptionLbl;
+	@FXML
+	Label itemDescription;
+	@FXML
+	Label raffleDateLbl;
+	@FXML
+	Label raffleDate;
+
+	@FXML
+	ChoiceBox raffleItemList;
+
+	@FXML
+	Button addRaffleItemBtn;
+	
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+		setupNodesWithInitialText();
+		
+		loadRaffleItems();
+	}
+	
+	private void setupNodesWithInitialText() {
+		raffleHeaderLbl.setText(RafflePageResources.RAFFLE_HEADER_LBL);
+		raffleItemListLbl.setText(RafflePageResources.RAFFLE_ITEM_LIST_LBL);
+		itemDescriptionLbl.setText(RafflePageResources.ITEM_DESCRIPTION_LBL);
+		raffleDateLbl.setText(RafflePageResources.RAFFLE_DATE_LBL);
+		addRaffleItemBtn.setText(RafflePageResources.ADD_RAFFLE_ITEM_BTN);
+	}
+	
+	private void loadRaffleItems() {
+		
+	}
+
+}

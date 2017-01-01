@@ -1,0 +1,12 @@
+package com.billings.events.interfaces;
+
+import java.util.List;
+
+import com.billings.jdbc.dto.Person;
+import com.billings.jdbc.dto.RaffleItem;
+
+public interface RaffleAdminPageEvents {
+	
+	public List<Person> getCustomersForRaffle(RaffleItem raffleItem);
+	
+}

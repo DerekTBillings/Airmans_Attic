@@ -1,0 +1,25 @@
+package com.billings.jdbc.sql;
+
+public class CheckoutItemInfoPageSQL {
+
+	public static final String getTypeList = "SELECT Type_Name FROM item_type ORDER BY Type_Name";
+	
+	public static final String createNewItemType = "INSERT INTO item_type(Type_Id, Type_Name) "+
+		"values(null, ?)";
+	
+	public static final String createNewItem = "INSERT INTO item (Item_Id, Name, Type_Id) "+
+		"VALUES (null, ?, ( "+
+		"	SELECT Type_Id "+
+		"    FROM item_type "+
+		"    WHERE Type_Name = ? "+
+		"))";
+	
+	public static final String getItemId = "SELECT Item_Id  "+
+		"FROM item "+
+		"WHERE Name = ? "+
+		"	AND Type_Id = ( "+
+		"		SELECT Type_Id "+
+		"       FROM item_type "+
+		"        WHERE Type_Name = ?)";
+	
+}

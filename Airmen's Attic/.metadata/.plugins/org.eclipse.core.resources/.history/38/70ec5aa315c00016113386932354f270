@@ -1,0 +1,106 @@
+package com.billings.jdbc.dao;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import com.billings.jdbc.dto.Person;
+import com.billings.jdbc.dto.RaffleItem;
+import com.billings.jdbc.sql.RaffleAdminPageSQL;
+import com.billings.jdbc.sql.RafflePageSQL;
+import com.billings.utils.Messages;
+import com.billings.utils.SQLStatementUtils;
+import com.billings.utils.Common;
+import com.billings.utils.Logger;
+
+public class RaffleAdminPageImpl implements RaffleAdminPageDAO {
+
+	@Override
+	public List<RaffleItem> getRaffleItems() {
+		List<RaffleItem> raffleItems = null;
+		
+		ResultSet results = SQLStatementUtils.executeQueryAndReturnResultSet(
+				RaffleAdminPageSQL.getRaffleItems);
+		
+		try {
+			raffleItems = getRaffleItemsFromResults(results);
+		} catch(SQLException e) {
+			e.printStackTrace();
+		} finally {
+			SQLStatementUtils.closeConnectionsWithResultSet();
+		}
+		
+		return raffleItems;
+	}
+
+	private List<RaffleItem> getRaffleItemsFromResults(ResultSet results) throws SQLException {
+		List<RaffleItem> raffleItems = new ArrayList<RaffleItem>();
+		
+		while(results.next()) {
+			RaffleItem item = Common.buildRaffleItemFromResults(results);
+			raffleItems.add(item);
+		}
+		
+		return raffleItems;
+	}
+
+	@Override
+	public List<Person> getPeopleInRaffleById(int raffleItemId) {
+		List<Person> peopleInRaffle = new ArrayList<Person>();
+		
+		ResultSet results = SQLStatementUtils.executeQueryAndReturnResultSet(
+			RaffleAdminPageSQL.getPeopleForRaffleItem, raffleItemId);
+		
+		try {
+			while(results.next()) {
+				Person loadedPerson = Common.buildPersonFromResults(results);
+				peopleInRaffle.add(loadedPerson);
+			}
+		} catch (SQLException e) {
+			Logger.log(e.getMessage());
+		} finally {
+			SQLStatementUtils.closeConnectionsWithResultSet();
+		}
+		
+		return peopleInRaffle;
+	}	
+
+	@Override
+	public void addPersonToRaffleForItem(int itemId, int personId) {
+		boolean isPersonInRaffle = false;
+		
+		ResultSet results = SQLStatementUtils.executeQueryAndReturnResultSet(
+				RafflePageSQL.isPersonInRaffleForItem, itemId, personId);
+		
+		int resultCount = getCountfromResults(results);
+		
+		if (resultCount == 0) {
+			SQLStatementUtils.executeQueryWithoutResultSet(
+				RafflePageSQL.addPersonToRaffleForItem, itemId, personId);		
+			
+			Logger.notifyUser(Messages.CUSTOEMR_ADDED_TO_RAFFLE_QUEUE);
+		} else {
+			Logger.notifyUser(Messages.CUSTOMER_ALREADY_IN_RAFFLE_QUEUE);
+		}
+	}
+	
+	private int getCountfromResults(ResultSet results) {
+		int count = 0;
+		
+		try {
+			results.next();
+			count = results.getInt(1);
+		} catch(Exception e) {
+			Logger.log(e.getMessage());
+		}
+		
+		return count;
+	}
+
+}

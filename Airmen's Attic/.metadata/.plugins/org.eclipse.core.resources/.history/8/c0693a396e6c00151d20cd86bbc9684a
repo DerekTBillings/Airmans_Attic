@@ -1,0 +1,73 @@
+package com.billings.test;
+
+import java.io.IOException;
+
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
+
+import com.billings.main.WindowController;
+import com.billings.utils.FXMLFactory;
+import com.billings.utils.UIUtils;
+
+public class CustomerSignInTest extends Application {
+
+	public static void main(String[] args) {
+		launch(args);
+//		WindowController main = new WindowController();
+//		main.main(args);
+//		
+//		String signInFXMLPath = FXMLFactory.getCustomerSignInPage();
+//		
+//		UIUtils.createPopupWindow(signInFXMLPath);
+
+	}
+
+	@Override
+	public void start(Stage window) throws Exception {
+		Pane pane = FXMLLoader.load(
+				getClass().getResource(FXMLFactory.getCustomerSignInPage()));
+		Scene scene = new Scene(pane);
+		window.setScene(scene);
+		window.show();
+		
+		Stage stage2 = new Stage();
+		Pane pane2 = FXMLLoader.load(
+				getClass().getResource(FXMLFactory.getFirstScene()));
+		Scene scene2 = new Scene(pane2);
+		stage2.setScene(scene2);
+		stage2.show();
+		
+	}
+	
+	public static void createPopupWindow(String fxmlPath) {
+		Pane paneForFXML = handleAndLoadFXML(fxmlPath);
+		
+		Scene popupScene = new Scene(paneForFXML);
+
+		Stage popupWindow = new Stage();
+		popupWindow.setScene(popupScene);
+		
+		popupWindow.show();
+	}
+	
+	private static Pane handleAndLoadFXML(String fxmlPath) {
+		Pane loadedFXMLPane = null;
+		try {
+			loadedFXMLPane = loadFXML(fxmlPath);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return loadedFXMLPane;
+	}
+	
+	private static Pane loadFXML(String fxmlPath) throws IOException {
+		Pane loadedFXMLPane = FXMLLoader.load(
+				getClass().getResource(fxmlPath));
+		return loadedFXMLPane;
+	}
+
+}

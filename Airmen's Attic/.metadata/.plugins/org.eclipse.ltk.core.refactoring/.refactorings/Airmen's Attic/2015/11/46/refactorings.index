@@ -1,0 +1,18 @@
+1447034120592	Rename type 'CustomerInfoPageEditSponsor'
+1447034190301	Rename method 'getEditSponsorImpl'
+1447035137728	Rename field 'storeNewCustomer'
+1447081593118	Rename method 'displayMessageToUsers'
+1447087761055	Rename method 'getNewCustoemrWithSponsorId'
+1447185563136	Rename method 'findEmployeeByName'
+1447294324731	Rename method 'getSponsorLookup'
+1447345394133	Rename type 'SelectCustomerPageSponsorLookup'
+1447345517218	Rename method 'setId'
+1447345542325	Rename field 'id'
+1447345573225	Rename method 'getId'
+1447353217824	Rename method 'findEmployeesByName'
+1447353227747	Rename method 'findEmployeeByPhone'
+1447353955694	Delete element
+1447361963455	Rename method 'customerLookupByPhone'
+1447433145602	Delete element
+1447442474166	Rename type 'SelectCustomerpageEventsRaffleSignIn'
+1447444169733	Rename field 'foundSponsor'

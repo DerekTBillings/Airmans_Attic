@@ -1,0 +1,14 @@
+
+.signInSignOutRow Button {
+	-fx-pref-width: 175;
+	-fx-pref-height: 75;
+}
+
+.adminBtnGroup Button {
+	-fx-pref-width: 125;
+	-fx-pref-height: 75;
+}
+
+#announcementsTextArea {
+	-fx-pref-width: 570;
+}

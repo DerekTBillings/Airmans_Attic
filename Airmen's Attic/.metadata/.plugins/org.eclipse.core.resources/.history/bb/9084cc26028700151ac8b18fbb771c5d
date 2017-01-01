@@ -1,0 +1,19 @@
+package com.billings.events.implementation;
+
+import com.billings.events.interfaces.SignInPageEvents;
+import com.billings.resources.CustomerInfoPageResources;
+
+public class SignInPageEventsSponsorLookup extends SignInPageEvents {
+
+	@Override
+	public void signInEvent() {
+		CustomerInfoPageResources.setupWithNewCustomerAndSponsorWithId();
+	}
+
+	@Override
+	public void newCustomerEvent() {
+		CustomerInfoPageResources.setupWithEditSponsorInfo();
+		super.openNewCustomerPage();
+	}
+
+}

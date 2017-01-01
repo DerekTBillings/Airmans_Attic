@@ -1,0 +1,27 @@
+
+.rootContainer {
+	-fx-pref-height: 500;
+	-fx-pref-width: 730px;
+}
+
+.blackAndWhiteTheme {
+	-fx-border-width: 3;
+}
+
+.blackAndWhiteTheme,
+ .blackAndWhiteTheme Button {
+	-fx-border-color: black;
+	-fx-border-radius: 15;
+	-fx-background-color: white;
+}
+
+
+Label, Button {
+	-fx-font-weight: bold;
+}
+
+.error {
+	-fx-border-color: red;
+}
+
+

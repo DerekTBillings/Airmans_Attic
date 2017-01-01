@@ -1,0 +1,23 @@
+package com.billings.utils;
+
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
+
+public class Common {
+
+	public static LocalDate convertDateToLocalDate(Date date) {
+		LocalDate convertedFormat = null;
+		
+		if (date != null) {
+			Instant instant = Instant.ofEpochMilli(date.getTime());
+			LocalDateTime dateTime = LocalDateTime.ofInstant(instant,  ZoneId.systemDefault());
+			convertedFormat = dateTime.toLocalDate();
+		}
+		
+		return convertedFormat;
+	}
+	
+}

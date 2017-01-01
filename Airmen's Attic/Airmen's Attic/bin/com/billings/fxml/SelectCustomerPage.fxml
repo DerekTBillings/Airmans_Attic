@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity"
+	minHeight="-Infinity" minWidth="-Infinity" prefHeight="261.0"
+	prefWidth="413.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="com.billings.controllers.SelectCustomerPageController"
+	stylesheets="@../stylesheets/CommonStylesheet.css"
+	styleClass="blackAndWhiteTheme">
+	<children>
+		<Label fx:id="pageHeaderLbl">
+			<VBox.margin>
+				<Insets bottom="20.0" top="20.0" />
+			</VBox.margin>
+		</Label>
+		<TableView fx:id="foundCustomersTbl" prefHeight="158.0"
+			prefWidth="393.0">
+			<columns>
+				<TableColumn fx:id="customerId" visible="false" />
+				<TableColumn fx:id="customer" prefWidth="136.0"/>
+				<TableColumn fx:id="sponsor" prefWidth="132.0"/>
+				<TableColumn fx:id="contact" prefWidth="124.0"/>
+			</columns>
+			<VBox.margin>
+				<Insets left="10.0" right="10.0" />
+			</VBox.margin>
+		</TableView>
+		<HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+			<children>
+				<Button fx:id="selectBtn" mnemonicParsing="false">
+					<HBox.margin>
+						<Insets right="10.0" />
+					</HBox.margin>
+				</Button>
+				<Button fx:id="cancelBtn" mnemonicParsing="false">
+					<HBox.margin>
+						<Insets left="10.0" />
+					</HBox.margin>
+				</Button>
+			</children>
+		</HBox>
+	</children>
+</VBox>

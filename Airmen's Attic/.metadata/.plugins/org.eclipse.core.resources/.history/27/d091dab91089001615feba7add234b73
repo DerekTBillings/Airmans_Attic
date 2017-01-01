@@ -1,0 +1,71 @@
+package com.billings.jdbc.dao;
+
+import java.sql.ResultSet;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import com.billings.jdbc.dto.RaffleItem;
+import com.billings.jdbc.sql.RafflePageSQL;
+import com.billings.utils.Common;
+import com.billings.utils.Logger;
+import com.billings.utils.SQLStatementUtils;
+
+public class RafflePageImpl implements RafflePageDAO{
+
+	@Override
+	public List<RaffleItem> getPendingRaffleItems() {
+		List<RaffleItem> raffleItems = new ArrayList<RaffleItem>();
+		
+		ResultSet results = SQLStatementUtils.executeQueryAndReturnResultSet(
+				RafflePageSQL.getPendingRaffleItems);
+		
+		try {
+			while(results.next()) {
+				RaffleItem item = Common.buildItemFromResults(results);
+				
+				raffleItems.add(item);
+			}
+		} catch (Exception e) {
+			Logger.log(e.getMessage());
+		} finally {
+			SQLStatementUtils.closeConnectionsWithResultSet();
+		}
+		
+		return raffleItems;
+	}
+	
+	private RaffleItem buildRaffleItem(ResultSet results) throws Exception {
+		RaffleItem item = new RaffleItem();
+		
+		item.setRaffleId(results.getInt("Raf-fleId"));
+		item.setName(results.getString("Name"));
+		item.setDescription(results.getString("Description"));
+		item.setType(results.getString("Type_Name"));
+		item.setStatus(results.getString("Status"));
+		
+		Date inDate = results.getDate("Date_In");
+		Date raffledDate = results.getDate("Date_Raffled");
+		Date toRaffleDate = results.getDate("Date_To_Raffle");
+		
+		LocalDate inLocal = Common.convertDateToLocalDate(inDate);
+		LocalDate raffledLocal = Common.convertDateToLocalDate(raffledDate);
+		LocalDate toRaffleLocal = Common.convertDateToLocalDate(toRaffleDate);
+		
+		item.setDateIn(inLocal);
+		item.setDateRaffled(raffledLocal);
+		item.setDateToRaffle(toRaffleLocal);
+		
+		return item;
+	}
+
+	@Override
+	public void addPersonToRaffleForItem(int itemId, int personId) {
+		SQLStatementUtils.executeQueryWithoutResultSet(
+			RafflePageSQL.addPersonToRaffleForItem, itemId, personId);		
+	}
+	
+	
+	
+}

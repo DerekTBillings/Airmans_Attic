@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity"
+	minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
+	prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+	stylesheets="@../stylesheets/CommonStylesheet.css"
+	styleClass="blackAndWhiteTheme"
+	fx:controller="com.billings.controllers.AtticEventsPageController">
+	<children>
+		<Label fx:id="atticEventsHeaderLbl">
+			<VBox.margin>
+				<Insets bottom="20.0" top="20.0" />
+			</VBox.margin>
+		</Label>
+		<TableView fx:id="eventsTable" prefHeight="242.0" prefWidth="580.0">
+			<columns>
+				<TableColumn fx:id="eventName" prefWidth="327.0" />
+				<TableColumn fx:id="eventStart" prefWidth="92.0" />
+				<TableColumn fx:id="eventEnd" prefWidth="83.0" />
+				<TableColumn fx:id="showCustomer" minWidth="7.0"
+					prefWidth="77.0" />
+			</columns>
+			<VBox.margin>
+				<Insets left="10.0" right="10.0" />
+			</VBox.margin>
+		</TableView>
+		<HBox alignment="CENTER" prefHeight="135.0" prefWidth="600.0">
+			<children>
+				<Button fx:id="newEventBtn" mnemonicParsing="false">
+					<HBox.margin>
+						<Insets right="10.0" />
+					</HBox.margin>
+				</Button>
+				<Button fx:id="editEventBtn" mnemonicParsing="false">
+					<HBox.margin>
+						<Insets left="10.0" right="10.0" />
+					</HBox.margin>
+				</Button>
+				<Button fx:id="removeEventBtn" mnemonicParsing="false">
+					<HBox.margin>
+						<Insets left="10.0" right="10.0" />
+					</HBox.margin>
+				</Button>
+				<Button fx:id="closeBtn" mnemonicParsing="false">
+					<HBox.margin>
+						<Insets left="10.0" />
+					</HBox.margin>
+				</Button>
+			</children>
+		</HBox>
+	</children>
+</VBox>

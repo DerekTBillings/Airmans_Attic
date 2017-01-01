@@ -1,0 +1,14 @@
+1443436120661	Move compilation unit
+1443436864192	Rename type 'Main'
+1443436904792	Move compilation unit
+1443437887684	Rename package 'com.billings.stages'
+1443622651267	Rename type 'StageFactory'
+1443622696385	Move compilation unit
+1443622781296	Rename type 'HomePage'
+1443623825331	Rename type 'ProgramInitializer'
+1443630302230	Rename field 'LogoutRowContent'
+1443630347599	Rename local variable 'hboxPanes'
+1443630445009	Rename method 'createAndAddRowContaingPageHeader'
+1443631067867	Rename local variable 'panesToBecomeHBox'
+1443632038853	Rename local variable 'panesToAdd'
+1443632334108	Rename method 'setupSignInSignOutButtonRowContent'

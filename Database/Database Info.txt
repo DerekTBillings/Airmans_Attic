@@ -1,0 +1,18 @@
+MySQL root password:
+	mysqlRootPassword
+
+Username
+	AAOwner
+Password
+	AccessAADB54321
+	
+Username
+	AAUser
+Password
+	QueryAADB54321
+	
+http://dev.mysql.com/doc/refman/5.0/en/windows-start-command-line.html
+	Start mysql server: 
+		C:\Program Files\MySQL\MySQL Server 5.6\bin\mysqld
+	Stop mysql servet:
+		C:\Program Files\MySQL\MySQL Server 5.6\bin\mysqladmin -u root shutdown

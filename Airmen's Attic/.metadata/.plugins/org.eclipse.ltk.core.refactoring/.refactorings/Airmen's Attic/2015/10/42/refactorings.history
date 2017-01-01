@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename method &apos;com.billings.utils.SQLStatementUtils.handleSQLException(...)&apos; to &apos;logSQLExceptionWithQueryInformation&apos;&#x0D;&#x0A;- Original project: &apos;Airmen&apos;s Attic&apos;&#x0D;&#x0A;- Original element: &apos;com.billings.utils.SQLStatementUtils.handleSQLException(...)&apos;&#x0D;&#x0A;- Renamed element: &apos;com.billings.utils.SQLStatementUtils.logSQLExceptionWithQueryInformation(...)&apos;&#x0D;&#x0A;- Update references to refactored element" delegate="false" deprecate="false" description="Rename method &apos;handleSQLException&apos;" flags="589826" id="org.eclipse.jdt.ui.rename.method" input="/src&lt;com.billings.utils{SQLStatementUtils.java[SQLStatementUtils~handleSQLException~QException;" name="logSQLExceptionWithQueryInformation" references="true" stamp="1445044957394" version="1.0"/>
+</session>

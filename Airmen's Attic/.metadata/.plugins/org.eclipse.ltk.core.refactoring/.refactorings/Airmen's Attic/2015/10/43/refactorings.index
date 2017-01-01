@@ -1,0 +1,13 @@
+1445349397577	Rename method 'initializeLabelTextValues'
+1445351151098	Rename method 'textSetup'
+1445648684019	Rename local variable 'programInitiatingClass'
+1445649859367	Rename type 'CustomerSignInPageConstants'
+1445649871422	Rename type 'CustomerSignInPageController'
+1445649884029	Rename type 'GuestSignInPageController'
+1445649890585	Rename type 'GuestSignInPageConstants'
+1445649904112	Rename resource 'CustomerSignInPage.fxml'
+1445649959160	Rename type 'CustomerSignInTest'
+1445649990625	Rename resource 'CustomerSignInStylesheet.css'
+1445650837108	Delete element
+1445651385327	Rename field 'mainTestClass'
+1445651756145	Rename method 'getCustomerSignInPage'

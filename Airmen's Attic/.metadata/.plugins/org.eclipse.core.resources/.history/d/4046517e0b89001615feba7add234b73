@@ -1,0 +1,7 @@
+package com.billings.jdbc.dao;
+
+public class RafflePageImpl implements RafflePageDAO{
+	
+	
+	
+}

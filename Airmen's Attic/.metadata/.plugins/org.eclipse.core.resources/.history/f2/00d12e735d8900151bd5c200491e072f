@@ -1,0 +1,87 @@
+package com.billings.events.implementation;
+
+import java.util.List;
+
+import com.billings.controllers.CustomerInfoPageController;
+import com.billings.events.interfaces.SignInPageEvents;
+import com.billings.jdbc.dao.SignInPageDAO;
+import com.billings.jdbc.dto.FoundCustomer;
+import com.billings.jdbc.dto.Person;
+import com.billings.jdbc.factory.SignInPageFactory;
+import com.billings.main.WindowController;
+import com.billings.resources.CustomerInfoPageResources;
+import com.billings.resources.SelectCustomerPageResources;
+import com.billings.utils.FXMLFactory;
+import com.billings.utils.Logger;
+
+public class SignInPageEventsSponsorLookup extends SignInPageEvents {
+
+	SignInPageDAO dao;
+	boolean foundSponsor = false;
+	
+	@Override
+	public boolean signInEvent(String phone, String name) {
+		foundSponsor = false;
+		
+		dao = SignInPageFactory.getSponsorLookupImpl();
+		
+		if (!phone.isEmpty()) {
+			findByPhone(phone);
+		} 
+		
+		if (!foundSponsor && !name.isEmpty()) {
+			List<FoundCustomer> foundCustomers = findCustomerByName(name);
+		}
+		
+		return foundSponsor;
+	}
+	
+	private void findByPhone(String phone) {
+		FoundCustomer sponsorForCustomer = dao.findEmployeeByPhone(phone);
+		
+		if (sponsorForCustomer != null) {
+			foundSponsor = true;
+			
+			Person customer = CustomerInfoPageController.getPerson();
+			
+			Person emptySponsor = customer.getSponsor();
+			int sponsorId = sponsorForCustomer.getPersonId();
+			
+			emptySponsor = new Person();
+			emptySponsor.setPersonId(sponsorId);
+		
+		}
+	}
+	
+	private List<FoundCustomer> findCustomerByName(String name) {
+		String[] parsedName = super.parseName(name);
+		String lastName = parsedName[0];
+		String firstName = parsedName[1];
+		
+		List<FoundCustomer> foundCustomers = dao.findEmployeesByName(lastName, firstName);
+		
+		if (foundCustomers.isEmpty()) {
+			Logger.notifyUser("There weren't any sponsors found for the given name.");
+		} else {
+			foundSponsor = true;
+			displayFoundCustomersToUser(foundCustomers);
+		}
+		
+		return foundCustomers;
+	}
+	
+	private void displayFoundCustomersToUser(List<FoundCustomer> foundCustomers) {
+		SelectCustomerPageResources.setupWithFoundCustomers(foundCustomers);
+
+		SelectCustomerPageResources.setupWithSponsorLookup();
+		
+		WindowController.createPopupWindow(
+				FXMLFactory.getSelectCustomerPage());
+	}
+
+	@Override
+	public void newCustomerEvent() {
+		
+	}
+
+}

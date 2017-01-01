@@ -1,0 +1,47 @@
+package com.billings.jdbc.dao;
+
+import java.sql.ResultSet;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import com.billings.jdbc.dto.RaffleItem;
+import com.billings.jdbc.sql.RafflePageSQL;
+import com.billings.utils.Common;
+import com.billings.utils.Logger;
+import com.billings.utils.SQLStatementUtils;
+
+public class RafflePageImpl implements RafflePageDAO{
+
+	@Override
+	public List<RaffleItem> getPendingRaffleItems() {
+		List<RaffleItem> raffleItems = new ArrayList<RaffleItem>();
+		
+		ResultSet results = SQLStatementUtils.executeQueryAndReturnResultSet(
+				RafflePageSQL.getPendingRaffleItems);
+		
+		try {
+			while(results.next()) {
+				RaffleItem item = Common.buildRaffleItemFromResults(results);
+				
+				raffleItems.add(item);
+			}
+		} catch (Exception e) {
+			Logger.log(e.getMessage());
+		} finally {
+			SQLStatementUtils.closeConnectionsWithResultSet();
+		}
+		
+		return raffleItems;
+	}
+
+	@Override
+	public void addPersonToRaffleForItem(int itemId, int personId) {
+		SQLStatementUtils.executeQueryWithoutResultSet(
+			RafflePageSQL.addPersonToRaffleForItem, itemId, personId);		
+	}
+	
+	
+	
+}

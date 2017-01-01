@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity"
+	minHeight="-Infinity" minWidth="-Infinity" prefHeight="286.0"
+	prefWidth="419.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+	stylesheets="@../stylesheets/CommonStylesheet.css" styleClass="blackAndWhiteTheme"
+	fx:controller="com.billings.controllers.EditAtticInfoPageController">
+	<children>
+		<TextArea fx:id="atticInfo" prefHeight="200.0" prefWidth="200.0">
+			<VBox.margin>
+				<Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+			</VBox.margin>
+		</TextArea>
+		<HBox alignment="CENTER" prefHeight="68.0" prefWidth="419.0">
+			<children>
+				<Button fx:id="updateBtn" mnemonicParsing="false">
+					<HBox.margin>
+						<Insets right="10.0" />
+					</HBox.margin>
+				</Button>
+				<Button fx:id="cancelBtn" mnemonicParsing="false">
+					<HBox.margin>
+						<Insets left="10.0" />
+					</HBox.margin>
+				</Button>
+			</children>
+			<VBox.margin>
+				<Insets bottom="10.0" />
+			</VBox.margin>
+		</HBox>
+	</children>
+</VBox>

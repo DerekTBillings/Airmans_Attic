@@ -1,0 +1,11 @@
+package com.billings.jdbc.dao;
+
+import java.util.List;
+
+import com.billings.jdbc.dto.RaffleItem;
+
+public interface RafflePageDAO {
+	
+	public List<RaffleItem> getPendingRaffleItems();
+	
+}

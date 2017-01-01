@@ -1,0 +1,9 @@
+1443701935103	Rename method 'addNodesToContentPane'
+1443702253974	Delete element
+1443707369101	Rename method 'initializeWithHBox'
+1443710241954	Rename method 'assignInsetsToContent'
+1443721145432	Rename method 'enlargeButtons'
+1443725891407	Rename method 'centerContentInHBoxes'
+1443725960859	Rename local variable 'hboxPanes'
+1443726492183	Delete element
+1443726632501	Rename method 'initializeButtons'
