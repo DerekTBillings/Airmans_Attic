@@ -39,8 +39,9 @@ public class CheckoutItemInfoPageImpl implements CheckoutItemInfoPageDAO {
 				item.getItemName(), item.getItemType());
 		
 		try {
-			results.next();
-			itemId = results.getInt("Item_Id");
+			if (results.next()) {
+				itemId = results.getInt("Item_Id");
+			}
 		} catch(SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -100,8 +101,9 @@ public class CheckoutItemInfoPageImpl implements CheckoutItemInfoPageDAO {
 		int itemCount = 0;
 		
 		try {
-			results.next();
-			itemCount = results.getInt(1);
+			if (results.next()) {
+				itemCount = results.getInt(1);
+			}
 			
 		} catch(Exception e) {
 			Logger.log(e.getMessage());
@@ -134,8 +136,9 @@ public class CheckoutItemInfoPageImpl implements CheckoutItemInfoPageDAO {
 		int itemsInResults = 0;
 		
 		try {
-			results.next();
-			itemsInResults = results.getInt(1);
+			if (results.next()) {
+				itemsInResults = results.getInt(1);
+			}
 			
 		} catch (Exception e) {
 			Logger.log(e.getMessage());

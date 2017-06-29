@@ -72,6 +72,8 @@ public class RaffleAdminPageController implements Initializable {
 		
 		setupRaffleItemTblClick();
 		setupRaffleItemBtn();
+		
+		setupCancelBtn();
 	}
 	
 	private void setupNodesWithInitialText() {
@@ -122,6 +124,9 @@ public class RaffleAdminPageController implements Initializable {
 			
 			if (isTargetAColumn(target)) {
 				RaffleAdminPageResources.personsInRaffleTbl.clear();
+				
+				winnerName.setText("");
+				winnerContact.setText("");
 				
 				RaffleItem selectedRow = getSelectedItem();
 				
@@ -231,5 +236,11 @@ public class RaffleAdminPageController implements Initializable {
 		
 		RaffleAdminPageDAO dao = new RaffleAdminPageImpl();
 		dao.updateRaffleItemWinner(raffleItem);
+	}
+	
+	private void setupCancelBtn() {
+		cancelBtn.setOnAction(e -> {
+			WindowController.closeNodeContainingWindow(cancelBtn);
+		});
 	}
 }

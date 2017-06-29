@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
 
+
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -19,15 +20,17 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 
+
+import com.billings.events.implementation.CustomerInfoPageEditCustomer;
 import com.billings.events.interfaces.CustomerInfoPageEvents;
+import com.billings.jdbc.dao.CustomerInfoPageSetupDAO;
+import com.billings.jdbc.dao.CustomerInfoPageSetupImpl;
 import com.billings.jdbc.dto.Person;
 import com.billings.main.WindowController;
 import com.billings.resources.CustomerInfoPageResources;
 import com.billings.resources.SignInPageResources;
 import com.billings.utils.FXMLFactory;
 import com.billings.utils.InputValidation;
-import com.billings.utils.Logger;
-import com.billings.utils.Messages;
 
 public class CustomerInfoPageController implements Initializable {
 
@@ -85,7 +88,7 @@ public class CustomerInfoPageController implements Initializable {
 	@FXML
 	Button editSponsorInfoBtn;
 	@FXML
-	Button deleteCustomerBtn;
+	Button archiveCustomerBtn;
 	
 	private static Person person;
 	
@@ -106,6 +109,7 @@ public class CustomerInfoPageController implements Initializable {
 		setupSubmitBtn();
 		setupEditSponsorInfoBtn();
 		setupCancelBtn();
+		setupArchiveCustomerBtn();
 		
 		populateRankList();
 		
@@ -114,10 +118,50 @@ public class CustomerInfoPageController implements Initializable {
 	
 	private void createOrLoadPerson() {
 		if (CustomerInfoPageResources.LOAD_PERSON) {
-			//TODO
+			person = getPersonInfo();
+			
+			if (person != null) {
+				loadPersonInfo();
+			}
 		} else {
 			person = new Person();
 		}
+	}
+	
+	private Person getPersonInfo() {
+		int personId = CustomerInfoPageResources.getLoadedCustomerId();
+		
+		CustomerInfoPageSetupDAO dao = new CustomerInfoPageSetupImpl();
+		Person person = dao.getPersonInfoById(personId);
+
+		return person;
+	}
+	
+	private void loadPersonInfo() {
+		String firstName = person.getFirstName();
+		String lastName = person.getLastName();
+		String workPhone = person.getWorkPhone();
+		String cellPhone = person.getCellPhone();
+		String email = person.getEmail();
+		String rank = person.getRank();
+		String organization = person.getOrganization();
+
+		LocalDate dateOfBirth = person.getBirthDate();
+		LocalDate militaryIdExpDate = person.getMilitaryIdExpirationDate();
+		
+		String dependentStatus = person.getDependentStatus();
+		
+		this.firstName.setText(firstName);
+		this.lastName.setText(lastName);
+		this.workPhone.setText(workPhone);
+		this.cellPhone.setText(cellPhone);
+		this.email.setText(email);
+		this.rank.setValue(rank);
+		this.dateOfBirth.setValue(dateOfBirth);
+		this.militaryIdExpDate.setValue(militaryIdExpDate);
+		this.dependentStatus.setText(dependentStatus);
+		this.organization.setText(organization);
+		
 	}
 	
 	private void setupNodesWithTextValues() {
@@ -135,14 +179,14 @@ public class CustomerInfoPageController implements Initializable {
 		submitBtn.setText(CustomerInfoPageResources.SUBMIT_BTN);
 		cancelBtn.setText(CustomerInfoPageResources.CANCEL_BTN);
 		editSponsorInfoBtn.setText(CustomerInfoPageResources.EDIT_SPONSOR_INFO_BTN);
-		deleteCustomerBtn.setText(CustomerInfoPageResources.DELETE_CUSTOMER_BTN);
+		archiveCustomerBtn.setText(CustomerInfoPageResources.ARCHIVE_CUSTOMER_BTN);
 		dateOfBirth.setPromptText(CustomerInfoPageResources.DATE_PROMPT_TEXT);
 		militaryIdExpDate.setPromptText(CustomerInfoPageResources.DATE_PROMPT_TEXT);
 	}
 	
 	private void removeNodesIfNecessary() {
 		if (CustomerInfoPageResources.REMOVE_DELTE_BTN) {
-			removeNode(deleteCustomerBtn);
+			removeNode(archiveCustomerBtn);
 		}
 		
 		if (CustomerInfoPageResources.REMOVE_EDIT_SPONSOR_BTN) {
@@ -279,6 +323,17 @@ public class CustomerInfoPageController implements Initializable {
 	
 	private void closePage() {
 		WindowController.closeNodeContainingWindow(cancelBtn);
+	}
+	
+	private void setupArchiveCustomerBtn() {
+		archiveCustomerBtn.setOnAction(e -> {
+			int personId = person.getPersonId();
+			String archiveStatus = person.getArchiveStatus();
+			
+			((CustomerInfoPageEditCustomer)pageEvents).toggleCustomerArchive(personId, archiveStatus);
+			
+			closePage();
+		});
 	}
 	
 	private void populateRankList() {

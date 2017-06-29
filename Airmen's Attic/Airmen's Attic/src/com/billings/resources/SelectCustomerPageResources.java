@@ -6,6 +6,7 @@ import java.util.List;
 import com.billings.events.implementation.SelectCustomerPageEventsAdminSignIn;
 import com.billings.events.implementation.SelectCustomerPageEventsCommon;
 import com.billings.events.implementation.SelectCustomerPageEventsCustomerCheckout;
+import com.billings.events.implementation.SelectCustomerPageEventsCustomerLookup;
 import com.billings.events.implementation.SelectCustomerPageEventsRaffleSignIn;
 import com.billings.events.implementation.SelectCustomerPageEventsSponsorLookup;
 import com.billings.events.implementation.SelectCustomerPageEventsVolunteerSignIn;
@@ -28,7 +29,6 @@ public class SelectCustomerPageResources {
 	public static SelectCustomerPageEvents pageEvents;
 	
 	public static void setupWithFoundCustomers(List<FoundCustomer> customers) {
-		
 		customers = trimCustomersPhonesToLastFive(customers);
 		
 		FOUND_CUSTOMERS = customers;
@@ -83,6 +83,11 @@ public class SelectCustomerPageResources {
 	public static void setupWithAdminPageSignIn() {
 		setupWithCommonValues();
 		pageEvents = new SelectCustomerPageEventsAdminSignIn();
+	}
+	
+	public static void setupWithCustomerLookup() {
+		setupWithCommonValues();
+		pageEvents = new SelectCustomerPageEventsCustomerLookup();
 	}
 	
 	private static void setupWithCommonValues() {

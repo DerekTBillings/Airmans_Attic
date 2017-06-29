@@ -32,4 +32,8 @@ public class Messages {
 	public static final String CUSTOMER_ALREADY_IN_RAFFLE_QUEUE = "Thank you for your interest. However, you are already in raffle for this item.";
 	
 	public static final String CUSTOEMR_ADDED_TO_RAFFLE_QUEUE = "Think you for your interest. You have been added to the raffle for this item";
+
+	public static final String CUSTOMER_UPDATED = "The provided customer has been updated with the submitted information.";
+	
+	public static final String CUSTOMER_ARCHIVED = "The provided customer has been (un)archived.";
 }

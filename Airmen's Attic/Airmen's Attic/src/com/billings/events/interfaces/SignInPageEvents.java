@@ -26,7 +26,7 @@ public abstract class SignInPageEvents {
 		
 		try {
 			customer = dao.findCustomerByPhone(
-					SignInPageSQL.findCustomerByPhone, phone);
+					SignInPageSQL.findActiveCustomerByPhone, phone);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -40,7 +40,7 @@ public abstract class SignInPageEvents {
 		String firstName = parsedName[1];
 		
 		List<FoundCustomer> customers = dao.findCustomersByName(
-				SignInPageSQL.findCustomerByName, lastName, firstName);
+				SignInPageSQL.findActiveCustomerByName, lastName, firstName);
 		
 		return customers;
 	}

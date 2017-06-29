@@ -6,26 +6,30 @@ public class SignInPageSQL {
 		"   	customer.Cell_Phone AS cellPhone, "+
 		"		if (customer.Dependent_Status='Y', concat(sponsor.Last_Name, ' ', sponsor.First_Name), '') AS sponsorName "+
 		"	FROM person customer, person sponsor, person_link link "+
-		"	WHERE (%s) "+
+		"	WHERE (%s %s) "+
 		"   	AND if (customer.Dependent_Status='Y', link.Dependent_Id = customer.Person_Id, link.Sponsor_Id is not null) "+
 		"   	AND if (customer.Dependent_Status='Y', sponsor.Person_Id = link.Sponsor_Id, sponsor.Person_Id = customer.Person_Id)";
 
-	private static final String findByPhone = "customer.Cell_Phone = ? "+
-		"	OR customer.Work_Phone = ?";
+	private static final String findByPhone = "(customer.Cell_Phone = ? "+
+		"	OR customer.Work_Phone = ?)";
 
 	private static final String findByName = "LOWER(customer.Last_Name) like ? AND LOWER(customer.First_Name) like ? ";
+	
+	private static final String findByActiveStatus = "AND customer.Archive_Status = 'Active'";
 		
-	public static final String findCustomerByPhone = String.format(findEmployeeByX, findByPhone);
+	public static final String findActiveCustomerByPhone = String.format(findEmployeeByX, findByPhone, findByActiveStatus);
+	public static final String findCustomerByPhone = String.format(findEmployeeByX, findByPhone, "");
 
-	public static final String findCustomerByName = String.format(findEmployeeByX, findByName);
+	public static final String findActiveCustomerByName = String.format(findEmployeeByX, findByName, findByActiveStatus);
+	public static final String findCustomerByName = String.format(findEmployeeByX, findByName, "");
 	
 	public static final String findCustomerNameById = "SELECT Last_Name, First_Name FROM person WHERE Person_Id = ?";
 	
 	private static final String findOnlySponsors = "AND customer.Dependent_Status='N'";
 	
-	public static final String findSponsorByName = findCustomerByName + findOnlySponsors;
+	public static final String findSponsorByName = findActiveCustomerByName + findOnlySponsors;
 	
-	public static final String findSponsorByPhone = findCustomerByPhone + findOnlySponsors;
+	public static final String findSponsorByPhone = findActiveCustomerByPhone + findOnlySponsors;
 	
 	public static final String signIn = "INSERT INTO sign_in_history (Person_Id, Time_In, Time_Out, Role) "+
 		"VALUES(?, now(), null, ?)";

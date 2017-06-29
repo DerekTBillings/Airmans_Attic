@@ -10,4 +10,8 @@ public class CustomerInfoPageSetupSQL {
 		"FROM system_values "+
 		"WHERE Category = 'required field'";
 	
+	public static final String getPersonById = "SELECT * "+
+		"FROM person "+
+		"WHERE Person_Id = ?";
+	
 }

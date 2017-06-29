@@ -20,10 +20,10 @@ public class SignInPageAdminPageSignIn extends SignInPageDAO {
 		boolean isAdminAccount = false;
 		
 		try {
-			results.next();
-			
-			int idCount = results.getInt("count");
-			isAdminAccount = idCount > 0;
+			if (results.next()) {
+				int idCount = results.getInt("count");
+				isAdminAccount = idCount > 0;
+			}
 		} catch(SQLException e) {
 			e.printStackTrace();
 		} finally {

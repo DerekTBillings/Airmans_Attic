@@ -119,7 +119,7 @@
 		</GridPane>
 		<HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
 			<children>
-            <Button fx:id="deleteCustomerBtn" mnemonicParsing="false">
+            <Button fx:id="archiveCustomerBtn" mnemonicParsing="false">
                <HBox.margin>
                   <Insets right="20.0" />
                </HBox.margin>

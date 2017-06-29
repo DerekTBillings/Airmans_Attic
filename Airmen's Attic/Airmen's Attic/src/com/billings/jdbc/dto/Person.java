@@ -16,6 +16,7 @@ public class Person {
 	private String cellPhone;
 	private LocalDate birthDate;
 	private String organization;
+	private String archiveStatus;
 	
 	private Person sponsor;
 	
@@ -122,6 +123,12 @@ public class Person {
 	}
 	public void setSponsor(Person sponsor) {
 		this.sponsor = sponsor;
+	}
+	public String getArchiveStatus() {
+		return archiveStatus;
+	}
+	public void setArchiveStatus(String archiveStatus) {
+		this.archiveStatus = archiveStatus;
 	}
 	
 }

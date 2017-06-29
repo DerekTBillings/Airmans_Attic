@@ -21,7 +21,7 @@ public class SignInPageEventsCustomerLookup extends SignInPageEvents {
 		super.dao = SignInPageFactory.getCommonImpl();
 		
 		if (!phone.isEmpty()) {
-			FoundCustomer customer = lookupByPhoneNumber(phone);
+			FoundCustomer customer = super.lookupByPhoneNumber(phone);
 			
 			if (!super.foundCustomerNullCheck(customer)) {
 				success = true;
@@ -33,7 +33,7 @@ public class SignInPageEventsCustomerLookup extends SignInPageEvents {
 		}
 		
 		if (!success && !name.isEmpty()) {
-			List<FoundCustomer> customers = lookupByName(name);
+			List<FoundCustomer> customers = super.lookupByName(name);
 			
 			if (!super.foundCustomersEmptyCheck(customers)) {
 				SelectCustomerPageResources.setupWithCustomerLookup();

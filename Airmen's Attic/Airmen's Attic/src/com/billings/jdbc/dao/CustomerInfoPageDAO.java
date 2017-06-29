@@ -13,15 +13,11 @@ public abstract class CustomerInfoPageDAO {
 	
 	public abstract boolean saveCustomer(Person person);
 	
-	
 	public void signInByPhone(String phone, String signInAsX) {
-		
 		SQLStatementUtils.executeQueryWithoutResultSet(
 				CustomerInfoPageSQL.signInByPhoneNumber, 
 				phone, phone, signInAsX);
-		
 	}
-	
 	
 	protected boolean isInformationUnique(Person person) {
 		boolean phoneNumbersAreUnique = true;
@@ -42,14 +38,12 @@ public abstract class CustomerInfoPageDAO {
 		return phoneNumbersAreUnique;
 	}
 	
-	
 	protected boolean getPhoneNumberInstanceCount(ResultSet resultSet) throws SQLException {
 		resultSet.next();
 		String countInColumn = resultSet.getString(1);
 		int count = Integer.parseInt(countInColumn);
 		return count == 0; //If the count is zero, the numbers are unique.
 	}
-	
 
 	protected void linkCustomerToNewSponsor(String linkQuery, Person customer) {
 		Person sponsor = customer.getSponsor();
@@ -63,7 +57,6 @@ public abstract class CustomerInfoPageDAO {
 		);
 	}
 	
-	
 	protected void linkCustomerToSponsorWithId(String linkQuery, Person customer) {
 		Person sponsor = customer.getSponsor();
 		
@@ -75,7 +68,6 @@ public abstract class CustomerInfoPageDAO {
 		);
 	}
 	
-	
 	protected String returnValueOrNull(String text) {
 		if (text.equals("")) {
 			return null;
@@ -83,7 +75,6 @@ public abstract class CustomerInfoPageDAO {
 		
 		return text;
 	}
-	
 	
 	protected void saveNewCustomer(Person person) {
 		SQLStatementUtils.executeQueryWithoutResultSet(
@@ -93,8 +84,6 @@ public abstract class CustomerInfoPageDAO {
 			person.getEmail(), person.getWorkPhone(), person.getCellPhone(),
 			person.getBirthDate(), person.getOrganization());
 	}
-	
-	
 	
 	protected void notifyUserPhoneNumbersNotUnique() {
 		Logger.notifyUser(Messages.needsUniquePhoneNumber);

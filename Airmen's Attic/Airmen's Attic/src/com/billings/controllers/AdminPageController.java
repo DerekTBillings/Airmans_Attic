@@ -4,10 +4,13 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 
+
 import com.billings.main.WindowController;
 import com.billings.resources.AdminPageResources;
 import com.billings.resources.CustomerInfoPageResources;
+import com.billings.resources.SignInPageResources;
 import com.billings.utils.FXMLFactory;
+
 
 
 import javafx.fxml.FXML;
@@ -152,10 +155,10 @@ public class AdminPageController implements Initializable {
 
 	private void setupCustomerLookupBtn() {
 		customerLookupBtn.setOnAction(e -> {
-			CustomerInfoPageResources.setupWithEditCustomer();
+			SignInPageResources.setupWithCustomerLookup();
 			
 			WindowController.createPopupWindow(
-					FXMLFactory.getCustomerInfoPage());
+					FXMLFactory.getSignInPage());
 		});
 	}
 

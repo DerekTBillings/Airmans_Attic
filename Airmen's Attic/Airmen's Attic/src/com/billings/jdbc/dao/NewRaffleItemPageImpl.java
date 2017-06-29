@@ -71,8 +71,9 @@ public class NewRaffleItemPageImpl implements NewRaffleItemPageDAO {
 				query, name, description, typeName, dateToRaffle);
 		
 		try {
-			results.next();
-			raffleItemId = results.getInt("Raffle_Id");
+			if (results.next()) {
+				raffleItemId = results.getInt("Raffle_Id");
+			}
 		} catch (Exception e) {
 			Logger.log(e.getMessage());
 		} finally {

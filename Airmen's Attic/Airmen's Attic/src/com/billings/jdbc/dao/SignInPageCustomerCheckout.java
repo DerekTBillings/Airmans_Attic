@@ -76,11 +76,12 @@ public class SignInPageCustomerCheckout extends SignInPageDAO {
 		String customerName = "";
 		
 		try {
-			results.next();
-			String firstName = results.getString("First_Name");
-			String lastName = results.getString("Last_Name");
-			
-			customerName = lastName + ", "+firstName;
+			if (results.next()) {
+				String firstName = results.getString("First_Name");
+				String lastName = results.getString("Last_Name");
+				
+				customerName = lastName + ", "+firstName;
+			}
 			
 		} catch (Exception e) {
 			Logger.log(e.getMessage());

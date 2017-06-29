@@ -59,7 +59,8 @@ public class RaffleAdminPageImpl implements RaffleAdminPageDAO {
 		while(results.next()) {
 			RaffleItem item = Common.buildRaffleItemFromResults(results);
 			
-			Person person = getRaffleItemWinner(item.getRaffleId());
+			Person winningCustomer = getRaffleItemWinner(item.getRaffleId());
+			item.setWinningCustomer(winningCustomer);
 			
 			raffleItems.add(item);
 		}
@@ -67,8 +68,26 @@ public class RaffleAdminPageImpl implements RaffleAdminPageDAO {
 		return raffleItems;
 	}
 	
-	private Person getRaffleItemWinner(int raffleId) {
+	private Person getRaffleItemWinner(int raffleId) {		
+		ResultSet results = SQLStatementUtils.executeQueryAndReturnResultSet(
+				RaffleAdminPageSQL.getWinnerForRaffleItem, raffleId);
 		
+		Person winner = null;
+		
+		try {
+			if (results.next()) {
+				winner = new Person();
+				
+				winner.setLastName(results.getString("Last_Name"));
+				winner.setFirstName(results.getString("First_Name"));
+				winner.setCellPhone(results.getString("Cell_Phone"));
+			}
+			
+		} catch(Exception e) {
+			Logger.log(e.getMessage());
+		}
+		
+		return winner;
 	}
 
 	@Override
@@ -121,10 +140,13 @@ public class RaffleAdminPageImpl implements RaffleAdminPageDAO {
 		int count = 0;
 		
 		try {
-			results.next();
-			count = results.getInt(1);
+			if (results.next()) {
+				count = results.getInt(1);
+			}
 		} catch(Exception e) {
 			Logger.log(e.getMessage());
+		} finally {
+			SQLStatementUtils.closeConnectionsWithResultSet();
 		}
 		
 		return count;

@@ -60,9 +60,9 @@ public abstract class SignInPageDAO {
 		
 		FoundCustomer customer = null;
 		try {
-			results.next();//iterate the results pointer allowing the build customer method to be shared
-			customer = buildCustomerFromResults(results);
-		
+			if (results.next()) {
+				customer = buildCustomerFromResults(results);
+			}
 		} catch(SQLException e) {
 			throw e;
 			
@@ -103,8 +103,9 @@ public abstract class SignInPageDAO {
 		int customerSignInCount = 0;
 		
 		try {
-			results.next();
-			customerSignInCount = results.getInt("signInCount");
+			if (results.next()) {
+				customerSignInCount = results.getInt("signInCount");
+			}
 		} catch(SQLException e) {
 			e.printStackTrace();
 		} finally {

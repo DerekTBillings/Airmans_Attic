@@ -42,4 +42,14 @@ public class CustomerInfoPageSQL {
 			"			OR Work_Phone = ? "+
 			"	), now(), null, ?)";
 	
+	public static final String updateCustomer = "UPDATE person "+
+			"SET Last_Name = ?, First_Name = ?, Rank = ?, "+
+			"	Dependent_Status = ?, Military_Id_Exp_Date = ?, "+
+			"	Email_Address = ?, Work_Phone = ?, Cell_Phone = ?, "+
+			"	Birth_Date = ?, Organization = ? "+
+			"WHERE Person_Id = ?";
+	
+	public static final String updateArchiveStatus = "UPDATE person "+
+			"SET Archive_Status = ? "+
+			"WHERE Person_Id = ?";
 }

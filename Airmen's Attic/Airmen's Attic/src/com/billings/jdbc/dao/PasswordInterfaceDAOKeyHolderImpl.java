@@ -18,9 +18,10 @@ public class PasswordInterfaceDAOKeyHolderImpl implements PasswordInterfaceDAO {
 				query, username, password);
 		
 		try {
-			results.next();
-			int matchesFound = results.getInt(1);
-			validUser = matchesFound > 0;
+			if (results.next()) {
+				int matchesFound = results.getInt(1);
+				validUser = matchesFound > 0;
+			}
 		
 		} catch(Exception e) {
 			Logger.log(e.getMessage());

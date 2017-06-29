@@ -12,11 +12,11 @@ import com.billings.utils.Logger;
 import com.billings.utils.Messages;
 
 public class SignInPageEventsVolunteerSignIn extends SignInPageEvents {
-
-	boolean success = false;
 	
 	@Override
 	public boolean signInEvent(String phone, String name) {
+		boolean success = false;
+		
 		super.dao = SignInPageFactory.getVolunteerSignInImpl();
 		
 		if (!phone.isEmpty()) {

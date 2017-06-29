@@ -1,9 +1,0 @@
-package com.billings.jdbc.sql;
-
-public class RafflePageSQL {
-	
-	public static String getPendingRaffleItems = "";
-	
-	public static String addPersonToRaffleForItem = "";
-	
-}
