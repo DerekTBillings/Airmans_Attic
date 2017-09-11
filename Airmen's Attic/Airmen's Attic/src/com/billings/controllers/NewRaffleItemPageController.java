@@ -58,10 +58,11 @@ public class NewRaffleItemPageController implements Initializable {
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		setupNodesWithTextValues();
 		populateTypeChoiceBox();
+		setupRaffleField();
 		setupCreateBtn();
 		setupCancelBtn();
 	}
-	
+
 	private void setupNodesWithTextValues() {
 		raffleItemHeaderLbl.setText(NewRaffleItemPageResources.RAFFLE_ITEM_HEADER_LBL);
 		nameLbl.setText(NewRaffleItemPageResources.NAME_LBL);
@@ -81,6 +82,10 @@ public class NewRaffleItemPageController implements Initializable {
 		type.setItems(itemTypeList);
 	}
 	
+	private void setupRaffleField() {
+		raffleDate.setEditable(false);
+	} 
+	
 	private void setupCreateBtn() {
 		createBtn.setOnAction(e -> {
 			if (checkForEmptyFields()) {
@@ -98,17 +103,8 @@ public class NewRaffleItemPageController implements Initializable {
 	}
 	
 	private boolean checkForEmptyFields() {
-		boolean fieldsComplete = true;
-		
-		if (checkInputsForEmptyTextFields(name, description)) { 
-			fieldsComplete = false;
-		} else if (checkTypeCategory()) {
-			fieldsComplete = false;
-		} else if (checkRaffleDate()) {
-			fieldsComplete = false;
-		}
-		
-		return fieldsComplete;
+		return hasFieldValues(name, description) &&
+				hasType() && hasRaffleDate();
 	}
 	
 	private boolean checkForNewItemType() {
@@ -139,37 +135,40 @@ public class NewRaffleItemPageController implements Initializable {
 		events.addNewRaffleItem(newRaffleItem);
 	}
 	
-	private boolean checkInputsForEmptyTextFields(TextField... fields) {
-		boolean fieldsIncomplete = false;
-		
+	private boolean hasFieldValues(TextField... fields) {
 		for (TextField field : fields) {
 			String inputText = field.getText();
 			
 			if (inputText.isEmpty()) {
 				InputValidation.addErrorFormat(field);
-				fieldsIncomplete = true;
 			}
 		}
-		return fieldsIncomplete;
+		
+		return true;
 	}
 	
-	private boolean checkTypeCategory() {
-		boolean fieldsIncomplete = false;
-		
+	private boolean hasType() {
 		String newTypeInput = newItemType.getText();
 		String selectedType = type.getValue();
 		
-		if (newTypeInput.isEmpty() && selectedType.isEmpty()) {
-			fieldsIncomplete = true;
+		if ((newTypeInput == null || newTypeInput.isEmpty()) && 
+				(selectedType == null || selectedType.isEmpty())) {
+			InputValidation.addErrorFormat(type); 
+			return false;
+		} else {
+			return true;
 		}
-		
-		return fieldsIncomplete;
-	}
+	}	
 	
-	private boolean checkRaffleDate() {
+	private boolean hasRaffleDate() {
 		LocalDate raffleDateInput = raffleDate.getValue();
 		
-		return raffleDateInput == null;
+		if (raffleDateInput == null) {
+			InputValidation.addErrorFormat(raffleDate);
+			return false;
+		} else {
+			return true;
+		}
 	}
 	
 	private RaffleItem populateRaffleItem() {

@@ -5,6 +5,7 @@ public class CheckoutItem implements Comparable {
 	private int itemId;
 	private String itemName;
 	private String itemType;
+	private boolean archived;
 	private int quantity;
 	
 	public CheckoutItem() {
@@ -37,6 +38,12 @@ public class CheckoutItem implements Comparable {
 	}
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
+	}
+	public boolean isArchived() {
+		return archived;
+	}
+	public void setArchived(boolean archived) {
+		this.archived = archived;
 	}
 
 	@Override

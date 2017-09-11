@@ -4,15 +4,8 @@ public class CustomerCheckOutPageSQL {
 	
 	public static final String getCheckoutItemList = "SELECT i.Item_Id, i.Name, t.Type_Name AS Type "+
 		"FROM item i "+
-		"INNER JOIN item_type t ON i.Type_Id = t.Type_Id "+
-		"WHERE i.Item_Id in ( "+
-		"	SELECT Item_Id "+
-		"    FROM checkout_history "+
-		"    WHERE Checkout_Date > DATE_SUB(CURRENT_DATE(), INTERVAL ( "+
-		"		SELECT Value "+
-		"		FROM system_values "+
-		"		WHERE Category = 'Item recency days') "+
-		"	DAY)) "+
+		"  INNER JOIN item_type t ON i.Type_Id = t.Type_Id "+
+		"WHERE i.is_archived = 'N' "+
 		"ORDER BY t.Type_Name ASC, i.Item_Id DESC";
 	
 	public static final String insertCheckoutItemHistory = "INSERT INTO checkout_history  "+

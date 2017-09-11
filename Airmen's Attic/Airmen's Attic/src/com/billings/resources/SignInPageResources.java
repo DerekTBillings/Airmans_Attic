@@ -71,7 +71,7 @@ public class SignInPageResources {
 		SIGN_IN_PAGE_EVENTS = new SignInPageEventsRaffle();
 		CUSTOMER_LOGIN_LABEL = "Sign In To Raffle";
 		LOGIN_BTN = "Next";
-		DISABLE_NEW_BUTTON = true;
+		DISABLE_NEW_BUTTON = false;
 	}
 	
 	public static void setupWithCustomerLookup() {

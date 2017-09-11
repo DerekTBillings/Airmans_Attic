@@ -11,6 +11,8 @@ import java.util.Date;
 import com.billings.jdbc.dto.Person;
 import com.billings.jdbc.dto.RaffleItem;
 
+import javafx.event.EventTarget;
+
 public class Common {
 	
 	public static LocalDate convertDateToLocalDate(Date date) {
@@ -61,21 +63,20 @@ public class Common {
 		person.setFirstName(results.getString("First_Name"));
 		person.setRank(results.getString("Rank"));
 		person.setDependentStatus(results.getString("Dependent_Status"));
-		person.setEmail(results.getString("Email_Address"));
-		person.setWorkPhone(results.getString("Work_Phone"));
 		person.setCellPhone(results.getString("Cell_Phone"));
-		person.setOrganization(results.getString("Organization"));
-
-		Date milExpDate = results.getDate("Military_Id_Exp_Date");
-		Date birthDate = results.getDate("Birth_Date");
-		
-		LocalDate milExpLocal = Common.convertDateToLocalDate(milExpDate);
-		LocalDate birthLocal = Common.convertDateToLocalDate(birthDate);
-		
-		person.setMilitaryIdExpirationDate(milExpLocal);
-		person.setBirthDate(birthLocal);
 		
 		return person;
+	}
+	
+	public static boolean isTargetAColumn(EventTarget target) {
+		String targetText = target.toString();
+		
+		if (targetText.startsWith("Text") ||
+				targetText.startsWith("TableColumn$1$1")) {
+			return true;
+		}
+		
+		return false;
 	}
 	
 }

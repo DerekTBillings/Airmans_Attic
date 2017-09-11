@@ -5,7 +5,6 @@ import java.util.ResourceBundle;
 
 
 import com.billings.main.WindowController;
-import com.billings.resources.CommonResources;
 import com.billings.resources.PasswordInterfaceResources;
 import com.billings.resources.SignInPageResources;
 import com.billings.resources.WelcomePageResources;
@@ -33,8 +32,6 @@ public class WelcomePageController implements Initializable {
 	@FXML
 	private Button raffleBtn;
 	@FXML
-	private Button keyHolderBtn;
-	@FXML
 	private Button volunteerSignOutBtn;
 	@FXML
 	private Button adminPageBtn;
@@ -46,7 +43,6 @@ public class WelcomePageController implements Initializable {
 		setupCheckOutBtn();
 		setupVolunteerSignInBtn();
 		setupRaffleBtn();
-		setupKeyHolderBtn();
 		setupAdminPageBtn();
 		setupVolunteerSignOutBtn();
 		setupAnnouncementsTextArea();
@@ -74,27 +70,13 @@ public class WelcomePageController implements Initializable {
 		checkOutBtn.setOnAction(e -> {
 			SignInPageResources.setupWithCustomerCheckout();
 			
-			if (CommonResources.isSystemSignedIn()) {
-				openCustomerCheckOutPage();
-			} else {
-				openPasswordInterfaceForCheckout();
-			}
+			openCustomerCheckOutPage();
 		});
 	}
 	
 	private void openCustomerCheckOutPage() {
 		WindowController.createPopupWindow(
 				FXMLFactory.getSignInPage());
-	}
-	
-	private void openPasswordInterfaceForCheckout() {
-		PasswordInterfaceResources.setupPageForKeyHolders();
-		PasswordInterfaceResources.overridePageRedirect(true);
-		PasswordInterfaceResources.setPageRedirect(
-				FXMLFactory.getSignInPage());
-		
-		WindowController.createPopupWindow(
-				FXMLFactory.getPasswordInterfacePage());
 	}
 	
 	private void setupVolunteerSignInBtn() {
@@ -111,16 +93,6 @@ public class WelcomePageController implements Initializable {
 		raffleBtn.setOnAction(e -> {
 			SignInPageResources.setupWithRaffleSignIn();
 			openSignInPage();
-		});
-	}
-	
-	private void setupKeyHolderBtn() {
-		keyHolderBtn.setText(WelcomePageResources.KEY_HOLDER_BTN_TEXT);
-		keyHolderBtn.setOnAction(e -> {
-			
-			PasswordInterfaceResources.setupPageForKeyHolders();
-			WindowController.createPopupWindow(
-					FXMLFactory.getPasswordInterfacePage());
 		});
 	}
 	

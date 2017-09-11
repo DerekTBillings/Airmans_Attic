@@ -4,7 +4,8 @@ public class RaffleAdminPageSQL {
 
 	public static final String getRaffleItems = "SELECT r.Raffle_Id, r.Name, r.Description, t.Type_Name, r.Status, r.Date_In, r.Date_Raffled, r.Date_To_Raffle "+ 
 		"FROM raffle_item r "+
-		"INNER JOIN item_type t on r.Type_Id = t.Type_Id ";
+		"INNER JOIN item_type t on r.Type_Id = t.Type_Id "+
+		"WHERE status = 'In' ";
 	
 	public static final String getWinnerForRaffleItem = "SELECT Last_Name, First_Name, Cell_Phone "+
 		"FROM person p "+
@@ -13,7 +14,7 @@ public class RaffleAdminPageSQL {
 		"	AND Raffle_Status = 'Winner'";
 	
 	public static String getPendingRaffleItems = getRaffleItems +
-		"WHERE Date_Raffled is null";
+		"and Date_Raffled is null";
 	
 	public static final String getPeopleForRaffleItem = "SELECT p.* "+
 		"FROM person p "+
@@ -37,5 +38,17 @@ public class RaffleAdminPageSQL {
 	
 	public static String addWinnerStatusForRaffleItem = String.format(updatePersonInRaffleTemplate,
 		"'Winner'", "and Person_Id = ?");
+
+	public static String setRaffleDate = "UPDATE raffle_item "+
+		"set date_raffled = sysdate() "+
+		"where raffle_id = ?";
+
+	public static String isItemRaffled = "SELECT date_raffled is not null as status "+
+			"FROM raffle_item "+
+			"WHERE raffle_id = ?";
+
+	public static String setItemAsOut = "UPDATE raffle_item "+
+			"SET status = 'Out' "+
+			"WHERE raffle_id = ?";
 	
 }

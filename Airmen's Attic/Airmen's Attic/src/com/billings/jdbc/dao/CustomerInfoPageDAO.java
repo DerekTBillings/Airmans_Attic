@@ -16,7 +16,7 @@ public abstract class CustomerInfoPageDAO {
 	public void signInByPhone(String phone, String signInAsX) {
 		SQLStatementUtils.executeQueryWithoutResultSet(
 				CustomerInfoPageSQL.signInByPhoneNumber, 
-				phone, phone, signInAsX);
+				phone, signInAsX);
 	}
 	
 	protected boolean isInformationUnique(Person person) {
@@ -50,9 +50,7 @@ public abstract class CustomerInfoPageDAO {
 		
 		SQLStatementUtils.executeQueryWithoutResultSet(
 			linkQuery,
-			returnValueOrNull(sponsor.getWorkPhone()),
 			returnValueOrNull(sponsor.getCellPhone()),
-			returnValueOrNull(customer.getWorkPhone()),
 			returnValueOrNull(customer.getCellPhone())
 		);
 	}
@@ -61,9 +59,7 @@ public abstract class CustomerInfoPageDAO {
 		Person sponsor = customer.getSponsor();
 		
 		SQLStatementUtils.executeQueryWithoutResultSet(
-			linkQuery,
-			sponsor.getPersonId(),
-			returnValueOrNull(customer.getWorkPhone()),
+			linkQuery, sponsor.getPersonId(),
 			returnValueOrNull(customer.getCellPhone())
 		);
 	}
@@ -80,9 +76,7 @@ public abstract class CustomerInfoPageDAO {
 		SQLStatementUtils.executeQueryWithoutResultSet(
 			CustomerInfoPageSQL.saveNewCustomer, 
 			person.getLastName(), person.getFirstName(), person.getRank(),
-			person.getDependentStatus(), person.getMilitaryIdExpirationDate(),
-			person.getEmail(), person.getWorkPhone(), person.getCellPhone(),
-			person.getBirthDate(), person.getOrganization());
+			person.getDependentStatus(), person.getCellPhone());
 	}
 	
 	protected void notifyUserPhoneNumbersNotUnique() {

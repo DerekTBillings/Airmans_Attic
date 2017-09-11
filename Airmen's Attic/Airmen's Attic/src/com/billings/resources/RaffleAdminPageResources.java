@@ -15,13 +15,17 @@ public class RaffleAdminPageResources {
 	public static String WINNER_LBL = "Winner";
 	public static String WINNER_NAME_LBL = "Name:";
 	public static String WINNER_CONTACT_LBL = "Contact";
-	public static String CANCEL_BTN = "Cancel";
+	public static String CANCEL_BTN = "Close";
 	public static String RAFFLE_ITEM_BTN = "Raffle Item";
 	public static String ITEM_RECEIVED_BTN = "Item Received";
 	
 	public static ObservableList<RaffleItem> raffleItemsInTbl;
 	public static ObservableList<Person> personsInRaffleTbl;
 	public static List<RaffleItem> raffleItems;
+	
+	public static boolean hasRaffleList() {
+		return raffleItemsInTbl != null;
+	}
 	
 	public static void addRaffleItem(RaffleItem raffleItem) {
 		int emptyItemIndex = -1;

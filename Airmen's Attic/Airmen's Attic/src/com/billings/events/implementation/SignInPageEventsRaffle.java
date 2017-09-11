@@ -49,8 +49,11 @@ public class SignInPageEventsRaffle extends SignInPageEvents {
 
 	@Override
 	public void newCustomerEvent() {
-		//When opening the raffle section, the user isn't given the option to create a new customer
-		//This code shouldn't be implemented
+		openNewRaffleItemPage();
+	}
+	
+	private void openNewRaffleItemPage() {
+		WindowController.createPopupWindow(FXMLFactory.getNewRaffleItemPage());
 	}
 
 }

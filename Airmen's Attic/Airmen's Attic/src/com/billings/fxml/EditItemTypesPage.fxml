@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox prefHeight="355.0" prefWidth="485.0" styleClass="blackAndWhiteTheme" stylesheets="@../stylesheets/CommonStylesheet.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.billings.controllers.EditItemTypesPageController">
+   <children>
+      <HBox alignment="CENTER" prefHeight="75.0" prefWidth="398.0">
+         <children>
+            <Label fx:id="headerLbl" />
+         </children>
+      </HBox>
+      <HBox prefHeight="249.0" prefWidth="398.0">
+         <children>
+            <VBox prefHeight="249.0" prefWidth="233.0">
+               <children>
+                  <TableView fx:id="typesTbl" prefHeight="249.0" prefWidth="219.0">
+                    <columns>
+                      <TableColumn fx:id="typesCol" prefWidth="201.0" />
+                    </columns>
+                  </TableView>
+               </children></VBox>
+            <VBox alignment="TOP_CENTER" prefHeight="249.0" prefWidth="240.0">
+               <children>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Label fx:id="editHeaderLbl" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="153.0" prefWidth="258.0">
+                     <children>
+                        <Label fx:id="typeNameLbl" alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="79.0">
+                           <padding>
+                              <Insets right="10.0" />
+                           </padding>
+                        </Label>
+                        <TextField fx:id="typeName" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="102.0" prefWidth="258.0">
+                     <children>
+                        <Button fx:id="deleteBtn" mnemonicParsing="false">
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button fx:id="saveBtn" mnemonicParsing="false">
+                           <HBox.margin>
+                              <Insets left="10.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </HBox>
+               </children></VBox>
+         </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <padding>
+            <Insets left="10.0" right="10.0" />
+         </padding>
+      </HBox>
+   </children>
+</VBox>

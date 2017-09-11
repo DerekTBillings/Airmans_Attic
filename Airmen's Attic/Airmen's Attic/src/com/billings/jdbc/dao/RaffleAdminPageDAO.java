@@ -14,4 +14,8 @@ public interface RaffleAdminPageDAO {
 	public boolean addPersonToRaffleForItem(int itemId, int personId);
 	
 	public void updateRaffleItemWinner(RaffleItem raffleItem);
+
+	public boolean isItemRaffled(int itemId);
+
+	public void setItemAsOut(int itemId);
 }

@@ -43,37 +43,16 @@ public class CustomerInfoPageController implements Initializable {
 	@FXML
 	Label rankLbl;
 	@FXML
-	Label dobLbl;
-	@FXML
-	Label workPhoneLbl;
-	@FXML
 	Label cellPhoneLbl;
 	@FXML
-	Label organizationLbl;
-	@FXML
 	Label dependentCheckLbl;
-	@FXML
-	Label emailLbl;
-	@FXML
-	Label militaryIdExpDateLbl;
 
 	@FXML
 	TextField firstName;
 	@FXML
 	TextField lastName;
 	@FXML
-	TextField workPhone;
-	@FXML
 	TextField cellPhone;
-	@FXML
-	TextField organization;
-	@FXML
-	TextField email;
-	
-	@FXML
-	DatePicker dateOfBirth;
-	@FXML
-	DatePicker militaryIdExpDate;
 	
 	@FXML
 	ChoiceBox<String> rank;
@@ -140,27 +119,16 @@ public class CustomerInfoPageController implements Initializable {
 	private void loadPersonInfo() {
 		String firstName = person.getFirstName();
 		String lastName = person.getLastName();
-		String workPhone = person.getWorkPhone();
 		String cellPhone = person.getCellPhone();
-		String email = person.getEmail();
 		String rank = person.getRank();
-		String organization = person.getOrganization();
-
-		LocalDate dateOfBirth = person.getBirthDate();
-		LocalDate militaryIdExpDate = person.getMilitaryIdExpirationDate();
 		
 		String dependentStatus = person.getDependentStatus();
 		
 		this.firstName.setText(firstName);
 		this.lastName.setText(lastName);
-		this.workPhone.setText(workPhone);
 		this.cellPhone.setText(cellPhone);
-		this.email.setText(email);
 		this.rank.setValue(rank);
-		this.dateOfBirth.setValue(dateOfBirth);
-		this.militaryIdExpDate.setValue(militaryIdExpDate);
 		this.dependentStatus.setText(dependentStatus);
-		this.organization.setText(organization);
 		
 	}
 	
@@ -169,19 +137,12 @@ public class CustomerInfoPageController implements Initializable {
 		firstNameLbl.setText(CustomerInfoPageResources.FIRST_NAME_LBL);
 		lastNameLbl.setText(CustomerInfoPageResources.LAST_NAME_LBL);
 		rankLbl.setText(CustomerInfoPageResources.RANK_LBL);
-		dobLbl.setText(CustomerInfoPageResources.DOB_LBL);
-		workPhoneLbl.setText(CustomerInfoPageResources.WORK_PHONE_LBL);
 		cellPhoneLbl.setText(CustomerInfoPageResources.CELL_PHONE_LBL);
-		organizationLbl.setText(CustomerInfoPageResources.ORGANIZATION_LBL);
 		dependentCheckLbl.setText(CustomerInfoPageResources.DEPENDENT_CHECK_LBL);
-		militaryIdExpDateLbl.setText(CustomerInfoPageResources.MILITARY_ID_EXP_DATE_LBL);
-		emailLbl.setText(CustomerInfoPageResources.EMAIL_LBL);
 		submitBtn.setText(CustomerInfoPageResources.SUBMIT_BTN);
 		cancelBtn.setText(CustomerInfoPageResources.CANCEL_BTN);
 		editSponsorInfoBtn.setText(CustomerInfoPageResources.EDIT_SPONSOR_INFO_BTN);
 		archiveCustomerBtn.setText(CustomerInfoPageResources.ARCHIVE_CUSTOMER_BTN);
-		dateOfBirth.setPromptText(CustomerInfoPageResources.DATE_PROMPT_TEXT);
-		militaryIdExpDate.setPromptText(CustomerInfoPageResources.DATE_PROMPT_TEXT);
 	}
 	
 	private void removeNodesIfNecessary() {
@@ -248,18 +209,8 @@ public class CustomerInfoPageController implements Initializable {
 		
 		if (!validation.validateName(firstName)) isValid = false;
 		if (!validation.validateName(lastName)) isValid = false;
-		
-		if (!validation.validatePhone(workPhone)) isValid = false;
 		if (!validation.validatePhone(cellPhone)) isValid = false;
-		
-		if (!validation.validateEmail(email)) isValid = false;
-		
-		if (!validation.validateBirthDate(dateOfBirth)) isValid = false;
-		if (!validation.validateMilExpirationDate(militaryIdExpDate)) isValid = false;
-		
 		if (!validation.validateRank(rank)) isValid = false;
-		
-		if (!validation.validateOrganization(organization)) isValid = false;
 		
 		return isValid;
 	}
@@ -270,15 +221,7 @@ public class CustomerInfoPageController implements Initializable {
 		
 		person.setFirstName(firstNm);
 		person.setLastName(lastNm);
-		person.setEmail(email.getText());
-		person.setOrganization(organization.getText());
-		
 		person.setRank(rank.getValue());
-		person.setMilitaryIdExpirationDate(militaryIdExpDate.getValue());
-		person.setBirthDate(dateOfBirth.getValue());
-		
-		person.setWorkPhone(cleanPhoneNumber(
-				workPhone.getText()));
 		person.setCellPhone(cleanPhoneNumber(
 				cellPhone.getText()));
 		
@@ -350,11 +293,6 @@ public class CustomerInfoPageController implements Initializable {
 		int listSize = requiredFields.size();
 		
 		requiredFieldsList = new HashSet<Node>();
-		
-		attemptToAddNodesToRequiredList(firstName, lastName, workPhone, cellPhone,
-			organization, email, dateOfBirth, 
-			militaryIdExpDate, rank);
-		
 	}
 	
 	private void attemptToAddNodesToRequiredList(Node... nodes) {

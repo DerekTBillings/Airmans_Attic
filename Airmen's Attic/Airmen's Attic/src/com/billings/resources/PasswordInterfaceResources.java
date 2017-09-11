@@ -39,12 +39,6 @@ public class PasswordInterfaceResources {
 		return pageDAO;
 	}
 	
-	public static void setupPageForKeyHolders() {
-		pageDAO = new PasswordInterfaceDAOKeyHolderImpl();
-		doPageRedirect = false;
-		doAnnotateResults = true;
-	}
-	
 	public static void setupPageForAdmins() { 
 		pageDAO = new PasswordInterfaceDAOAdminImpl();
 		doPageRedirect = true;

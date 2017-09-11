@@ -1,12 +1,10 @@
 package com.billings.utils;
 
-import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
 import javafx.scene.Node;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 
 public class InputValidation {
@@ -85,87 +83,6 @@ public class InputValidation {
 		return allowed;
 	}
 	
-	public boolean validateEmail(TextField emailField) {
-		boolean allowed = true;
-		
-		String email = emailField.getText();
-		email = email.trim();
-		
-		emailField.setText(email);
-		
-		int numOfAts = email.replaceAll("[^@]", "").length();
-		boolean containsAPeriod = email.contains(".");
-		int numOfChars = email.length();
-		
-		if (requiredFields.contains(emailField) ||
-				numOfChars > 0) {
-			if (numOfAts != 1 &&
-					numOfChars < 4 &&
-					!containsAPeriod) {
-				
-				allowed = false;
-			}
-		} 
-		
-		if (!allowed) {
-			addErrorFormat(emailField);
-		} else {
-			removeErrorFormat(emailField);
-		}
-		
-		return allowed;
-	}
-	
-	public boolean validateMilExpirationDate(DatePicker dateField) {
-		boolean allowed = true;
-		
-		LocalDate dateValue = dateField.getValue();
-		LocalDate currDate = LocalDate.now();
-		
-		if (requiredFields.contains(dateField) &&
-				(dateValue == null || dateValue.equals(""))) {
-			allowed = false;
-		}
-		
-		if (dateValue != null && 
-				currDate.compareTo(dateValue) > 0) {
-			allowed = false;
-		}
-		
-		if (!allowed) {
-			addErrorFormat(dateField);
-		} else {
-			removeErrorFormat(dateField);
-		}
-		
-		return allowed;
-	}
-	
-	public boolean validateBirthDate(DatePicker dateField) {
-		boolean allowed = true;
-
-		LocalDate dateValue = dateField.getValue();
-		LocalDate currDate = LocalDate.now();
-		
-		if (requiredFields.contains(dateField) &&
-				(dateValue == null || dateValue.equals(""))) {
-			allowed = false;
-		}
-		
-		if (dateValue != null && 
-				currDate.compareTo(dateValue) < 0) {
-			allowed = false;
-		}
-		
-		if (!allowed) {
-			addErrorFormat(dateField);
-		} else {
-			removeErrorFormat(dateField);
-		}
-		
-		return allowed;
-	}
-	
 	public boolean validateRank(ChoiceBox rank) {
 		boolean allowed = true;
 		
@@ -180,28 +97,6 @@ public class InputValidation {
 			addErrorFormat(rank);
 		} else {
 			removeErrorFormat(rank);
-		}
-		
-		return allowed;
-	}
-	
-	public boolean validateOrganization(TextField organization) {
-		boolean allowed = true;
-		
-		String orgValue = organization.getText();
-		orgValue = orgValue.trim();
-		
-		organization.setText(orgValue);
-		
-		if (requiredFields.contains(organization) &&
-				orgValue.equals("")) {
-			allowed = false;
-		}
-		
-		if (!allowed) {
-			addErrorFormat(organization);
-		} else {
-			removeErrorFormat(organization);
 		}
 		
 		return allowed;

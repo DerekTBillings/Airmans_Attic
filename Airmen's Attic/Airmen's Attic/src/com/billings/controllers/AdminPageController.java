@@ -29,52 +29,9 @@ public class AdminPageController implements Initializable {
 	Label adminHeaderLbl;
 	@FXML
 	Label atticInfoLbl;
-	@FXML
-	Label contactLbl;
-	@FXML
-	Label atticNotesLbl;
-	@FXML
-	Label miscLbl;
-	@FXML
-	Label bagCountTextLbl;
-	@FXML
-	Label bagCountLbl;
-	@FXML
-	Label historyLbl;
-
-	@FXML
-	TextArea atticNotes;
+	
 	@FXML
 	TextArea atticInfo;
-
-	@FXML
-	Tab infoTab;
-	@FXML
-	Tab adminActionsTab;
-	@FXML
-	Tab notesTab;
-
-	@FXML
-	TableView contactsTbl;
-	@FXML
-	TableView historyTbl;
-
-	@FXML
-	TableColumn contactName;
-	@FXML
-	TableColumn contactsCategory;
-	@FXML
-	TableColumn contactsContactInfo;
-	@FXML
-	TableColumn contactsComments;
-	@FXML
-	TableColumn historyBagCount;
-	@FXML
-	TableColumn historyChurchCame;
-	@FXML
-	TableColumn historyAnimalDonations;
-	@FXML
-	TableColumn historyDate;
 
 	@FXML
 	Button raffleAdminBtn;
@@ -83,67 +40,39 @@ public class AdminPageController implements Initializable {
 	@FXML
 	Button generateReportsBtn;
 	@FXML
-	Button addRemoveContactsBtn;
-	@FXML
-	Button addEventsBtn;
-	@FXML
 	Button editAtticInfoBtn;
 	@FXML
-	Button increaseBagCountBtn;
-
+	Button editItemBtn;
 	@FXML
-	CheckBox animalDonationChk;
-	@FXML
-	CheckBox churchCameChk;
+	Button editItemTypesBtn;
 	
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		setupNodesWithText();
-		
 		setupButtonEvents();
+		setupAtticInfoField();
 	}
 	
 	private void setupNodesWithText() {
 		adminHeaderLbl.setText(AdminPageResources.ADMIN_HEADER_LBL);
 		atticInfoLbl.setText(AdminPageResources.ATTIC_INFO_LBL);
-		contactLbl.setText(AdminPageResources.CONTACT_LBL);
-		atticNotesLbl.setText(AdminPageResources.ATTIC_NOTES_LBL);
-		miscLbl.setText(AdminPageResources.MISC_LBL);
-		bagCountTextLbl.setText(AdminPageResources.BAG_COUNT_TEXT_LBL);
-		bagCountLbl.setText(AdminPageResources.BAG_COUNT_LBL);
-		historyLbl.setText(AdminPageResources.HISTORY_LBL);
-		atticNotes.setText(AdminPageResources.ATTIC_NOTES);
 		atticInfo.setText(AdminPageResources.ATTIC_INFO);
-		infoTab.setText(AdminPageResources.INFO_TAB);
-		adminActionsTab.setText(AdminPageResources.ADMIN_ACTIONS_TAB);
-		notesTab.setText(AdminPageResources.NOTES_TAB);
-		contactName.setText(AdminPageResources.CONTACT_NAME); 
-		contactsCategory.setText(AdminPageResources.CONTACTS_CATEGORY);
-		contactsContactInfo.setText(AdminPageResources.CONTACTS_CONTACT_INFO);
-		contactsComments.setText(AdminPageResources.CONTACTS_COMMENTS);
-		historyBagCount.setText(AdminPageResources.HISTORY_BAG_COUNT); 
-		historyChurchCame.setText(AdminPageResources.HISTORY_CHURCH_CAME); 
-		historyAnimalDonations.setText(AdminPageResources.HISTORY_ANIMAL_DONATIONS); 
-		historyDate.setText(AdminPageResources.HISTORY_DATE); 
 		raffleAdminBtn.setText(AdminPageResources.RAFFLE_ADMIN_BTN);
 		customerLookupBtn.setText(AdminPageResources.CUSTOMER_LOOKUP_BTN); 
 		generateReportsBtn.setText(AdminPageResources.GENERATE_REPORTS_BTN);
-		addRemoveContactsBtn.setText(AdminPageResources.ADD_REMOVE_CONTACTS_BTN);
-		addEventsBtn.setText(AdminPageResources.ADD_EVENTS_BTN);
 		editAtticInfoBtn.setText(AdminPageResources.EDIT_ATTIC_INFO_BTN); 
-		increaseBagCountBtn.setText(AdminPageResources.INCREASE_BAG_COUNT_BTN);
-		animalDonationChk.setText(AdminPageResources.ANIMAL_DONATION_CHK);
-		churchCameChk.setText(AdminPageResources.CHURCH_CAME_CHK); 
+		editItemBtn.setText(AdminPageResources.EDIT_ITEM_BTN);
+		editItemTypesBtn.setText(AdminPageResources.EDIT_ITEM_TYPES_BTN);
 	}
 	
 	private void setupButtonEvents() {
 		setupRaffleAdminBtn();
 		setupCustomerLookupBtn();
 		setupGenerateReportsBtn();
-		setupAddRemoveContactsBtn();
-		setupAddEventsBtn();
 		setupEditAtticInfoBtn();
+		setupEditItemBtn();
+		setupEditItemTypesBtn();
 	}
 
 	private void setupRaffleAdminBtn() {
@@ -169,26 +98,29 @@ public class AdminPageController implements Initializable {
 		});
 	}
 
-	private void setupAddRemoveContactsBtn() {
-		addRemoveContactsBtn.setOnAction(e -> {
-			WindowController.createPopupWindow(
-					FXMLFactory.getAddRemoveContactsPage());
-		});
-	}
-
-	private void setupAddEventsBtn() {
-		addEventsBtn.setOnAction(e -> {
-			WindowController.createPopupWindow(
-					FXMLFactory.getAtticEventsPage());
-		});
-	}
-
-	private void setupEditAtticInfoBtn() {
+	private void setupEditAtticInfoBtn() {		
 		editAtticInfoBtn.setOnAction(e -> {
 			WindowController.createPopupWindow(
 					FXMLFactory.getEditAtticInfoPage());
 		});
-		
+	}
+	
+	private void setupEditItemBtn() {
+		editItemBtn.setOnAction(e -> {
+			WindowController.createPopupWindow(
+					FXMLFactory.getEditItemPage());
+		});
+	}
+
+	private void setupEditItemTypesBtn() {
+		editItemTypesBtn.setOnAction(e -> {
+			WindowController.createPopupWindow(
+					FXMLFactory.getEditItemTypesPage());
+		});
+	}
+	
+	private void setupAtticInfoField() {
+		atticInfo.setEditable(false);
 	}
 
 }

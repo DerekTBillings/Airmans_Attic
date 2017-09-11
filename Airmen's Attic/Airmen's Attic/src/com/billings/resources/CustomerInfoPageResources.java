@@ -18,13 +18,8 @@ public class CustomerInfoPageResources {
 	public static String FIRST_NAME_LBL;
 	public static String LAST_NAME_LBL;
 	public static String RANK_LBL;
-	public static String DOB_LBL;
-	public static String WORK_PHONE_LBL;
 	public static String CELL_PHONE_LBL;
-	public static String ORGANIZATION_LBL;
 	public static String DEPENDENT_CHECK_LBL;
-	public static String MILITARY_ID_EXP_DATE_LBL;
-	public static String EMAIL_LBL;
 	public static String SUBMIT_BTN;
 	public static String CANCEL_BTN;
 	public static String EDIT_SPONSOR_INFO_BTN;
@@ -64,13 +59,8 @@ public class CustomerInfoPageResources {
 		FIRST_NAME_LBL = "First Name:";
 		LAST_NAME_LBL = "Last Name:";
 		RANK_LBL = "Rank:";
-		DOB_LBL = "Date of Birth:";
-		WORK_PHONE_LBL = "Work Phone:";
 		CELL_PHONE_LBL = "Cell Phone:";
-		ORGANIZATION_LBL = "Organization/Unit: ";
 		DEPENDENT_CHECK_LBL = "Check if Dependent:";
-		MILITARY_ID_EXP_DATE_LBL = "Mil. Id Exp. Date";
-		EMAIL_LBL = "Email:";
 		SUBMIT_BTN = "Submit";
 		CANCEL_BTN = "Cancel";
 		EDIT_SPONSOR_INFO_BTN = "Edit Sponsor";

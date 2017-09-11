@@ -56,7 +56,7 @@ public abstract class SignInPageDAO {
 		phone = cleanPhone(phone);
 		
 		ResultSet results = SQLStatementUtils.executeQueryAndReturnResultSet(
-				query, phone, phone);
+				query, phone);
 		
 		FoundCustomer customer = null;
 		try {

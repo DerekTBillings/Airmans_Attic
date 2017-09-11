@@ -39,7 +39,8 @@ public class NewRaffleItemPageEventsImpl implements NewRaffleItemPageEvents{
 		int raffleId = getRaffleIdForItem(newRaffleItem);
 		newRaffleItem.setRaffleId(raffleId);
 		
-		RaffleAdminPageResources.addRaffleItem(newRaffleItem);
+		if (RaffleAdminPageResources.hasRaffleList())
+			RaffleAdminPageResources.addRaffleItem(newRaffleItem);
 	}
 
 	@Override

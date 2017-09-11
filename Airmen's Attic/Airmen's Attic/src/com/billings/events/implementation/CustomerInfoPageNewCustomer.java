@@ -21,10 +21,6 @@ public class CustomerInfoPageNewCustomer implements CustomerInfoPageEvents {
 	private void signInNewCustomer(Person person) {
 		String phone = person.getCellPhone();
 		
-		if (phone.isEmpty()) {
-			phone = person.getWorkPhone();
-		}
-		
 		CustomerInfoPageDAO dao = CustomerInfoPageResources.CUSTOMER_DAO;
 		
 		dao.signInByPhone(phone, 

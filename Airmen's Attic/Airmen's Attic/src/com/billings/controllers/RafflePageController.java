@@ -5,12 +5,15 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.SingleSelectionModel;
 
 import com.billings.jdbc.dao.RaffleAdminPageDAO;
 import com.billings.jdbc.dao.RaffleAdminPageImpl;
@@ -34,7 +37,7 @@ public class RafflePageController implements Initializable {
 	Label raffleDate;
 
 	@FXML
-	ChoiceBox raffleItemList;
+	ChoiceBox<RaffleItem> raffleItemList;
 
 	@FXML
 	Button addRaffleItemBtn;
@@ -65,12 +68,13 @@ public class RafflePageController implements Initializable {
 		raffleList.addAll(itemsInFaffle);
 	}
 	
-	private void setupRaffleItemListOnClick() {
-		raffleItemList.setOnAction(e -> {
-			RaffleItem itemSelected = (RaffleItem)raffleItemList.getValue();
-			
-			String selectedItemDescription = itemSelected.getDescription();
-			String selectedItemDateToRaffle = itemSelected.getDateToRaffle().toString();
+	private void setupRaffleItemListOnClick() {		
+		raffleItemList.valueProperty().addListener(
+				(ObservableValue<? extends RaffleItem> observableValue, 
+						RaffleItem prevItemSelected, 
+						RaffleItem currItemSelected) -> {			
+			String selectedItemDescription = currItemSelected.getDescription();
+			String selectedItemDateToRaffle = currItemSelected.getDateToRaffle().toString();
 			
 			itemDescription.setText(selectedItemDescription);
 			raffleDate.setText(selectedItemDateToRaffle);

@@ -4,12 +4,9 @@ public class CustomerInfoPageSQL {
 	
 	public static final String saveNewCustomer = "INSERT INTO person ( "+
 		"	Person_Id, Last_Name, First_Name, Rank, "+
-		"    Dependent_Status, Military_Id_Exp_Date, "+
-		"    Email_Address, Work_Phone, Cell_Phone, "+
-		"    Birth_Date, Organization "+
-		")  "+
+		"    Dependent_Status, Cell_Phone, Archive_Status) "+
 		"VALUES ( "+
-		"	NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )";
+		"	NULL, ?, ?, ?, ?, ?, 'Active')";
 	
 	public static final String countInstancesOfSuppliedPhoneNumbers = "SELECT COUNT(Person_Id) "+
 		"FROM person "+
@@ -19,14 +16,12 @@ public class CustomerInfoPageSQL {
 			"VALUES (%s "+
 			"    (SELECT Person_Id "+
 			"     FROM person "+
-			"     WHERE Work_Phone = ? "+
-			"		OR Cell_Phone = ?))");
+			"     WHERE Cell_Phone = ?))");
 	
 	
 	public static final String lookupCustomerIdByPhoneNumbers = "SELECT Person_Id "+
 			"     FROM person "+
-			"     WHERE Work_Phone = ? "+
-			"		OR Cell_Phone = ?";
+			"     WHERE Cell_Phone = ?";
 	
 	public static final String linkCustomerToSponsorUsingSponsorId = String.format(createLinkTemplate, "?,");
 
@@ -39,14 +34,11 @@ public class CustomerInfoPageSQL {
 			"		SELECT Person_Id "+
 			"        FROM person "+
 			"        WHERE Cell_Phone = ? "+
-			"			OR Work_Phone = ? "+
 			"	), now(), null, ?)";
 	
 	public static final String updateCustomer = "UPDATE person "+
 			"SET Last_Name = ?, First_Name = ?, Rank = ?, "+
-			"	Dependent_Status = ?, Military_Id_Exp_Date = ?, "+
-			"	Email_Address = ?, Work_Phone = ?, Cell_Phone = ?, "+
-			"	Birth_Date = ?, Organization = ? "+
+			"	Dependent_Status = ?, Cell_Phone = ? "+
 			"WHERE Person_Id = ?";
 	
 	public static final String updateArchiveStatus = "UPDATE person "+

@@ -81,10 +81,6 @@ public class PasswordInterfaceController implements Initializable {
 				success = events.submit(user, pass);
 				
 				if (success) {
-					if (PasswordInterfaceResources.doAnnotateResults) {
-						annotateSuccess();
-					}
-					
 					if (PasswordInterfaceResources.doPageRedirect) {
 						pageRedirect();
 					}
@@ -116,10 +112,6 @@ public class PasswordInterfaceController implements Initializable {
 		} else {
 			InputValidation.removeErrorFormat(inputField);
 		}
-	}
-	
-	private void annotateSuccess() {
-		CommonResources.annotateSignedIntoSystem();
 	}
 	
 	private void pageRedirect() {

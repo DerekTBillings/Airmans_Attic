@@ -13,6 +13,7 @@ import javafx.stage.StageStyle;
 
 import com.billings.resources.CommonResources;
 import com.billings.utils.FXMLFactory;
+import com.billings.utils.Logger;
 
 /**
  * This class is used to start the program and
@@ -71,6 +72,8 @@ public class WindowController extends Application{
 	}
 	
 	private static Pane loadFXML(String fxmlPath) throws IOException {
+		Logger.log("Redirected to: "+fxmlPath);
+		
 		Pane loadedFXMLPane = FXMLLoader.load(
 				CommonResources.MAIN_CLASS.getResource(fxmlPath));
 		return loadedFXMLPane;

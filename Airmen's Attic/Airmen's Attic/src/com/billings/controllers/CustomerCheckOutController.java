@@ -28,6 +28,7 @@ import com.billings.jdbc.dto.CheckoutItem;
 import com.billings.main.WindowController;
 import com.billings.resources.CheckoutItemInfoPageResources;
 import com.billings.resources.CustomerCheckOutPageResources;
+import com.billings.utils.Common;
 import com.billings.utils.FXMLFactory;
 
 public class CustomerCheckOutController implements Initializable {
@@ -74,18 +75,12 @@ public class CustomerCheckOutController implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		setupNodesWithTextValues();
-		
 		setupColumnLinks();
-
 		storeCheckoutListInResources();
-		
 		resetCheckoutList();
 		populateHistoryList();
-		
 		setupCheckoutListEvents();
-		
 		setupFilterEvents();
-		
 		setupCheckoutBtn();
 		setupCancelBtn();
 	}
@@ -157,7 +152,7 @@ public class CustomerCheckOutController implements Initializable {
 		inventoryTbl.setOnMouseClicked(e -> {
 			EventTarget target = e.getTarget();
 			
-			if (isTargetAColumn(target)) {
+			if (Common.isTargetAColumn(target)) {
 				TableViewSelectionModel<CheckoutItem> selectedItem = inventoryTbl.getSelectionModel();
 				CheckoutItem selectedRow = selectedItem.getSelectedItem();
 				
@@ -165,19 +160,6 @@ public class CustomerCheckOutController implements Initializable {
 				openCheckoutItemInfoPage();
 			}
 		});
-	}
-	
-	private boolean isTargetAColumn(EventTarget target) {
-		String targetText = target.toString();
-		
-		boolean isCorrectTarget = false;
-		
-		if (targetText.startsWith("Text") ||
-				targetText.startsWith("TableColumn$1$1")) {
-			isCorrectTarget = true;
-		}
-		
-		return isCorrectTarget;
 	}
 	
 	private void openCheckoutItemInfoPage() {

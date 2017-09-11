@@ -10,8 +10,7 @@ public class SignInPageSQL {
 		"   	AND if (customer.Dependent_Status='Y', link.Dependent_Id = customer.Person_Id, link.Sponsor_Id is not null) "+
 		"   	AND if (customer.Dependent_Status='Y', sponsor.Person_Id = link.Sponsor_Id, sponsor.Person_Id = customer.Person_Id)";
 
-	private static final String findByPhone = "(customer.Cell_Phone = ? "+
-		"	OR customer.Work_Phone = ?)";
+	private static final String findByPhone = "customer.Cell_Phone = ?";
 
 	private static final String findByName = "LOWER(customer.Last_Name) like ? AND LOWER(customer.First_Name) like ? ";
 	

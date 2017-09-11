@@ -3,7 +3,7 @@ package com.billings.resources;
 public class AddRemoveContactsPageResources {
 
 	public static String CONTACT_TBL_COLUMN = "Contact";
-	public static String CUSTOMER_INFO_HEADER_LBL = "Customer Info";
+	public static String CONTACT_INFO_HEADER_LBL = "Contact Info";
 	public static String COMPANY_LBL = "Company:";
 	public static String CONTACT_INFO_LBL = "Contact Info";
 	public static String FIRST_NAME_LBL = "First Name:";

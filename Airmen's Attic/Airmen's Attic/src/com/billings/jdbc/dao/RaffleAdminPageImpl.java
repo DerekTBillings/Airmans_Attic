@@ -156,6 +156,7 @@ public class RaffleAdminPageImpl implements RaffleAdminPageDAO {
 	public void updateRaffleItemWinner(RaffleItem raffleItem) {
 		String removeWinnerQuery = RaffleAdminPageSQL.removeWinnerStatusForRaffleItem;
 		String addWinnerQuery = RaffleAdminPageSQL.addWinnerStatusForRaffleItem;
+		String setRaffleDateQuery = RaffleAdminPageSQL.setRaffleDate;
 		
 		int raffleItemId = raffleItem.getRaffleId();
 		
@@ -164,6 +165,37 @@ public class RaffleAdminPageImpl implements RaffleAdminPageDAO {
 		
 		SQLStatementUtils.executeQueryWithoutResultSet(removeWinnerQuery, raffleItemId);
 		SQLStatementUtils.executeQueryWithoutResultSet(addWinnerQuery, raffleItemId, winnerId);
+		SQLStatementUtils.executeQueryWithoutResultSet(setRaffleDateQuery, raffleItemId);
+	}
+
+	@Override
+	public boolean isItemRaffled(int itemId) {
+		String query = RaffleAdminPageSQL.isItemRaffled;
+		
+		ResultSet rs = SQLStatementUtils.executeQueryAndReturnResultSet(query, itemId);
+
+		return isItemRaffled(rs);
+	}
+	
+	private boolean isItemRaffled(ResultSet rs) {
+		try {
+			if (rs.next()) {
+				return rs.getBoolean("status");
+			}
+		} catch(Exception e) {
+			Logger.log(e.getMessage());
+		} finally {
+			SQLStatementUtils.closeConnectionsWithResultSet();
+		}
+		
+		return false;
+	}
+
+	@Override
+	public void setItemAsOut(int itemId) {
+		String query = RaffleAdminPageSQL.setItemAsOut;
+		
+		SQLStatementUtils.executeQueryWithoutResultSet(query, itemId);
 	}
 
 }

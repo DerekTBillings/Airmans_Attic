@@ -6,9 +6,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox styleClass="rootContainer, blackAndWhiteTheme" alignment="CENTER" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-	fx:controller="com.billings.controllers.WelcomePageController"
-	stylesheets="@../stylesheets/WelcomePageStylesheet.css, @../stylesheets/CommonStylesheet.css">
+<VBox alignment="CENTER" styleClass="rootContainer, blackAndWhiteTheme" stylesheets="@../stylesheets/WelcomePageStylesheet.css, @../stylesheets/CommonStylesheet.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.billings.controllers.WelcomePageController">
    <children>
       <HBox alignment="CENTER">
          <children>
@@ -27,7 +25,7 @@
             <TextArea fx:id="announcementsTextArea" prefHeight="200.0" prefWidth="400.0" />
          </children>
       </HBox>
-      <HBox styleClass="signInSignOutRow" alignment="CENTER" prefHeight="105.0" prefWidth="726.0">
+      <HBox alignment="CENTER" prefHeight="105.0" prefWidth="726.0" styleClass="signInSignOutRow">
          <children>
             <Button fx:id="customerSignInBtn" mnemonicParsing="false" HBox.hgrow="ALWAYS">
                <HBox.margin>
@@ -47,7 +45,7 @@
       </HBox>
       <HBox alignment="CENTER" prefHeight="96.0" prefWidth="600.0">
          <children>
-            <VBox styleClass="adminBtnGroup" alignment="CENTER" prefHeight="200.0">
+            <VBox alignment="CENTER" prefHeight="200.0" styleClass="adminBtnGroup">
                <children>
                   <Button fx:id="raffleBtn" mnemonicParsing="false" HBox.hgrow="ALWAYS">
                      <VBox.margin>
@@ -59,12 +57,7 @@
                   		<Insets bottom="10.0" />
                   	</VBox.margin>
                   </Button>
-                  <Button fx:id="keyHolderBtn" mnemonicParsing="false" HBox.hgrow="ALWAYS">
-                  	<VBox.margin>
-                  		<Insets bottom="10.0" />
-                  	</VBox.margin>
-                  </Button>
-                  <Button fx:id="adminPageBtn" mnemonicParsing="false" HBox.hgrow="ALWAYS"/>
+                  <Button fx:id="adminPageBtn" mnemonicParsing="false" HBox.hgrow="ALWAYS" />
                </children>
             </VBox>
          </children>

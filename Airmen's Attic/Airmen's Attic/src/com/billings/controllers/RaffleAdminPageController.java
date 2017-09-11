@@ -50,7 +50,7 @@ public class RaffleAdminPageController implements Initializable {
 	Label winnerContactLbl;
 	@FXML
 	Label winnerContact;
-
+	
 	@FXML
 	Button cancelBtn;
 	@FXML
@@ -72,6 +72,7 @@ public class RaffleAdminPageController implements Initializable {
 		
 		setupRaffleItemTblClick();
 		setupRaffleItemBtn();
+		setupItemReceivedBtn();
 		
 		setupCancelBtn();
 	}
@@ -90,7 +91,7 @@ public class RaffleAdminPageController implements Initializable {
 	
 	private void setupPeopleInRaffleTbl() {
 		personInRaffleName.setCellValueFactory(
-			new PropertyValueFactory<Person, String>("lastName")
+			new PropertyValueFactory<Person, String>("fullName")
 		);
 		personInRaffleContact.setCellValueFactory(
 			new PropertyValueFactory<Person, String>("cellPhone")
@@ -130,11 +131,13 @@ public class RaffleAdminPageController implements Initializable {
 				
 				RaffleItem selectedRow = getSelectedItem();
 				
-				String raffleName = selectedRow.getName();
-				if (raffleName.equals("New")) {
-					createNewRaffleItem();
-				} else {
-					populatePeopleInRaffle(selectedRow);
+				if (selectedRow != null) {
+					String raffleName = selectedRow.getName();
+					if (raffleName.equals("New")) {
+						createNewRaffleItem();
+					} else {
+						populatePeopleInRaffle(selectedRow);
+					}
 				}
 			}
 		});
@@ -236,6 +239,54 @@ public class RaffleAdminPageController implements Initializable {
 		
 		RaffleAdminPageDAO dao = new RaffleAdminPageImpl();
 		dao.updateRaffleItemWinner(raffleItem);
+	}
+	
+	private void setupItemReceivedBtn() {
+		itemReceivedBtn.setOnAction(e -> {
+			int itemId = getSelectedItemId();
+			
+			if (itemId != -1 && isItemRaffled(itemId)) {
+				setItemAsOut(itemId);
+				removeItemFromList();
+				resetFields();
+			}
+		});
+	}
+	
+	private int getSelectedItemId() {
+		RaffleItem item = getSelectedItem();
+		
+		if (item != null) {
+			return item.getRaffleId();
+		}
+		
+		return -1;
+	}
+	
+	private boolean isItemRaffled(int itemId) {
+		RaffleAdminPageDAO dao = new RaffleAdminPageImpl();
+		
+		return dao.isItemRaffled(itemId);
+	}
+	
+	private void setItemAsOut(int itemId) {
+		RaffleAdminPageDAO dao = new RaffleAdminPageImpl();
+		
+		dao.setItemAsOut(itemId);
+	}
+	
+	private void removeItemFromList() {
+		RaffleItem item = getSelectedItem();
+		ObservableList<RaffleItem> itemList = raffleItemTbl.getItems();
+		itemList.remove(item);
+	}
+	
+	private void resetFields() {
+		peopleInRaffleTbl.getItems().clear();
+		
+		raffleItemDescription.setText(""); 
+		winnerContact.setText("");
+		winnerName.setText("");
 	}
 	
 	private void setupCancelBtn() {

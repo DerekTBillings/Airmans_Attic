@@ -45,17 +45,9 @@ public class FXMLFactory {
 	public static String getRaffleAdminPage() {
 		return fxmlPackagePath+"RaffleAdminPage.fxml";
 	}
-	
-	public static String getAddRemoveContactsPage() {
-		return fxmlPackagePath+"AddRemoveContactsPage.fxml";
-	}
 
 	public static String getEditAtticInfoPage() {
 		return fxmlPackagePath+"EditAtticInfoPage.fxml";
-	}
-	
-	public static String getAtticEventsPage() {
-		return fxmlPackagePath+"AtticEventsPage.fxml";
 	}
 	
 	public static String getEditAtticEventsPage() {
@@ -86,4 +78,11 @@ public class FXMLFactory {
 		return fxmlPackagePath+"PasswordInterface.fxml";
 	}
 	
+	public static String getEditItemPage() {
+		return fxmlPackagePath+"EditItemPage.fxml";
+	}
+
+	public static String getEditItemTypesPage() {
+		return fxmlPackagePath+"EditItemTypesPage.fxml";
+	}
 }
