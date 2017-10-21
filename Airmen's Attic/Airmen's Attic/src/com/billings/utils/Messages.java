@@ -23,7 +23,7 @@ public class Messages {
 	
 	public static final String VOLUNTEER_ALREADY_SIGNED_IN = "You are already signed in as a volunteer.";
 	
-	public static final String SUCCESSFUL_SIGN_IN = "You have successfully signed in as a %s. Thank you.";
+	public static final String SUCCESSFUL_SIGN_IN = "%s, you have successfully signed in as a %s. Thank you.";
 
 	public static final String INVALID_USERNAME_OR_PASSWORD = "The username or password that was provided was invalid.";
 	
@@ -36,4 +36,8 @@ public class Messages {
 	public static final String CUSTOMER_UPDATED = "The provided customer has been updated with the submitted information.";
 	
 	public static final String CUSTOMER_ARCHIVED = "The provided customer has been (un)archived.";
+	
+	public static final String RULES_ACKNOWLEDGEMENT = "By clicking yes, you are acknowledging that you "+
+			"understand and agree to the Airmen's Attic "+
+			"rules and guidelines.";
 }

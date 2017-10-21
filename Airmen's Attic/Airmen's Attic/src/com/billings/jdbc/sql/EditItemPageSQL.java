@@ -2,7 +2,7 @@ package com.billings.jdbc.sql;
 
 public class EditItemPageSQL {
 	
-	public static String getItems = "select item_id, name, type_name, is_archived = 'Y' as archived "+
+	public static String getItems = "select item_id, name as item_name, type_name as item_type, is_archived = 'Y' as archived "+
 			"from item i "+
 			"	inner join item_type t on i.type_id = t.type_id";
 	

@@ -49,10 +49,10 @@ public class EditItemPageController implements Initializable {
 	TextField itemName;
 	@FXML
 	TextField newItemType;
-
+	
 	@FXML
 	ChoiceBox<String> itemType;
-
+	
 	@FXML
 	Button saveBtn;
 	
@@ -138,8 +138,11 @@ public class EditItemPageController implements Initializable {
 		saveBtn.setOnAction(e -> {
 			CheckoutItem selectedItem = getSelectedItem();
 			
-			if (selectedItem != null)
+			if (selectedItem != null) {
 				saveChanges(selectedItem);
+				resetFields();
+				reloadItems();
+			}
 		});
 	}
 
@@ -156,10 +159,15 @@ public class EditItemPageController implements Initializable {
 		selectedItem.setItemName(itemName.getText());
 		selectedItem.setArchived(archivedStatus.isSelected());
 		
+		setItemType(selectedItem);
+	}
+
+	private void setItemType(CheckoutItem selectedItem) {
 		String selectedType = newItemType.getText();
 		
-		if (selectedType.isEmpty()) {
+		if (!selectedType.isEmpty()) {
 			saveItemType(selectedType);
+			addNewItemType(selectedType);
 			selectedItem.setItemType(selectedType);
 		} else {
 			selectedItem.setItemType(itemType.getValue());
@@ -171,9 +179,33 @@ public class EditItemPageController implements Initializable {
 		
 		dao.addItemType(itemType);
 	}
+
+	private void addNewItemType(String selectedType) {
+		itemType.getItems().add(selectedType);
+		
+		sortItemTypes();
+	}
+
+	private void sortItemTypes() {
+		itemType.getItems().sort((type1, type2) -> {
+			return type1.compareTo(type2);
+		});
+	}
 	
 	private void notifyUserOfUpdate() {
 		Logger.notifyUser(EditItemPageResources.updateComplete);
+	}
+
+	private void resetFields() {
+		itemName.clear(); 
+		newItemType.clear();
+		itemType.setValue("");
+		archivedStatus.setSelected(false);
+	}
+	
+	private void reloadItems() {
+		itemsTbl.getItems().clear();
+		addItemsToTable();
 	}
 
 }

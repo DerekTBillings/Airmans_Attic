@@ -10,8 +10,9 @@ public class CustomerInfoPageSetupSQL {
 		"FROM system_values "+
 		"WHERE Category = 'required field'";
 	
-	public static final String getPersonById = "SELECT * "+
-		"FROM person "+
-		"WHERE Person_Id = ?";
+	public static final String getPersonById = "SELECT p.*, case when admin_level is not null then 'true' else 'false' end as admin "+
+		"FROM person p "+
+		"	left outer join admin_accounts a on p.person_id = a.person_id "+
+		"WHERE p.Person_Id = ?";
 	
 }

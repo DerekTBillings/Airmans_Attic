@@ -1,8 +1,5 @@
 package com.billings.jdbc.dao;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
 import com.billings.jdbc.sql.SignInPageSQL;
 import com.billings.main.WindowController;
 import com.billings.utils.FXMLFactory;
@@ -13,28 +10,21 @@ import com.billings.utils.SQLStatementUtils;
 public class SignInPageAdminPageSignIn extends SignInPageDAO {
 
 	@Override
-	public void signIn(int personId) {
-		ResultSet results = SQLStatementUtils.executeQueryAndReturnResultSet(
-				SignInPageSQL.isCustomerAnAdmin, personId);
-		
-		boolean isAdminAccount = false;
-		
-		try {
-			if (results.next()) {
-				int idCount = results.getInt("count");
-				isAdminAccount = idCount > 0;
-			}
-		} catch(SQLException e) {
-			e.printStackTrace();
-		} finally {
-			SQLStatementUtils.closeConnectionsWithResultSet();
-		}
-		
-		if (isAdminAccount) {
+	public void signIn(int personId) {		
+		if (isAdminAccount(personId)) {
 			openAdminPage();
 		} else {
 			notifyUserNotAdmin();
 		}
+	}
+
+	private boolean isAdminAccount(int personId) {
+		String query = SignInPageSQL.isCustomerAnAdmin;
+		
+		int count = (Integer)SQLStatementUtils.executeQueryForSingleCell(
+				query, Integer.class, personId);
+		
+		return count > 0;
 	}
 	
 	private void openAdminPage() {

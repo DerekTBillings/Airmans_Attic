@@ -17,69 +17,20 @@ public class CustomerCheckOutPageImpl implements CustomerCheckOutPageDAO {
 	
 	@Override
 	public List<CheckoutItem> getCheckoutItemList() {
+		String query = CustomerCheckOutPageSQL.getCheckoutItemList;
 		
-		ResultSet results = getCheckoutItemsResultSet();
-		
-		List<CheckoutItem> checkoutItemList = createItemList(results);
-		
-		return checkoutItemList;
-	}
-	
-	private ResultSet getCheckoutItemsResultSet() {
-		return SQLStatementUtils.executeQueryAndReturnResultSet(
-			 CustomerCheckOutPageSQL.getCheckoutItemList);
-	}
-	
-	private List<CheckoutItem> createItemList(ResultSet results) {
-		List<CheckoutItem> itemList = null;
-		
-		try {
-			itemList = buildItemList(results);
-		} catch(SQLException e) {
-			e.printStackTrace();
-		} finally {
-			SQLStatementUtils.closeConnectionsWithResultSet();
-		}
-		
-		return itemList;
-	}
-	
-	private List<CheckoutItem> buildItemList(ResultSet results) throws SQLException {
-		List<CheckoutItem> itemList = new ArrayList<CheckoutItem>(); 
-		
-		while (results.next()) {
-			CheckoutItem item = buildItem(results);
-			itemList.add(item);
-		}
-		
-		return itemList;
-	}
-	
-	private CheckoutItem buildItem(ResultSet results) throws SQLException {
-		CheckoutItem item = new CheckoutItem();
-		
-		int itemId = results.getInt("Item_Id");
-		String name = results.getString("Name");
-		String type = results.getString("Type");
-		
-		item.setItemId(itemId);
-		item.setItemName(name);
-		item.setItemType(type);
-		
-		return item;
+		return SQLStatementUtils.executeQuery(query, CheckoutItem.class);
 	}
 	
 	@Override
 	public void checkout(List<CheckoutItem> checkoutItems, int personId) {
-		
 		checkoutCustomerItems(checkoutItems, personId);
 		
 		signCustomerOut(personId);
 		
 	}
 
-	private void checkoutCustomerItems(List<CheckoutItem> checkoutItems,
-			int personId) {
+	private void checkoutCustomerItems(List<CheckoutItem> checkoutItems, int personId) {
 		List<CheckoutItem> checkedOutItems = filterCheckoutItemList(checkoutItems);
 		
 		int listSize = checkedOutItems.size();
@@ -89,7 +40,7 @@ public class CustomerCheckOutPageImpl implements CustomerCheckOutPageDAO {
 			
 			Object[] parameters = buildParameterList(checkedOutItems, personId, listSize);
 			
-			SQLStatementUtils.executeQueryWithoutResultSet(query, parameters);
+			SQLStatementUtils.executeInsert(query, parameters);
 		}
 	}
 
@@ -112,15 +63,11 @@ public class CustomerCheckOutPageImpl implements CustomerCheckOutPageDAO {
 		
 		query.append(CustomerCheckOutPageSQL.insertCheckoutItemHistory);
 		
-		boolean first = true;
-		
 		for (int i=0; i<listSize; i++) {
-			if (!first) {
+			if (i > 0) 
 				query.append(",");
-			} else {
-				first = false;
-			}
-			query.append(CustomerCheckOutPageSQL.inserCheckoutItemHistoryValues);
+
+			query.append(CustomerCheckOutPageSQL.insertCheckoutItemHistoryValues);
 		}
 		
 		return query.toString();
@@ -128,9 +75,8 @@ public class CustomerCheckOutPageImpl implements CustomerCheckOutPageDAO {
 
 	private Object[] buildParameterList(List<CheckoutItem> checkedOutItems,
 			int userId, int listSize) {
-		//There are 3 expected parameters so to get the total expected parameters
-		//multiply the listSize by 3
-		Object[] parameterList = new Object[listSize*3];
+		int paramCount = 3;
+		Object[] parameterList = new Object[listSize * paramCount];
 		int index = 0;
 		
 		for (int i=0; i<listSize; i++) {
@@ -147,7 +93,8 @@ public class CustomerCheckOutPageImpl implements CustomerCheckOutPageDAO {
 	}
 	
 	private void signCustomerOut(int personId) {
-		SQLStatementUtils.executeQueryWithoutResultSet(
-				CustomerCheckOutPageSQL.customerSignOut, personId);
+		String query = CustomerCheckOutPageSQL.customerSignOut;
+		
+		SQLStatementUtils.executeUpdate(query, personId);
 	}
 }

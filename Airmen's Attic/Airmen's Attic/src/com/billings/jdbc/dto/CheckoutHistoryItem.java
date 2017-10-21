@@ -28,5 +28,8 @@ public class CheckoutHistoryItem {
 	public void setDate(Date date) {
 		this.date = date;
 	}
+	public void setSQLDate(java.sql.Date sqlDate) {
+		this.date = sqlDate;
+	}
 	
 }

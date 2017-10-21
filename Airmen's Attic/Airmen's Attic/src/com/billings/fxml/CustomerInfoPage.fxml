@@ -92,9 +92,17 @@
 				</Button>
 				<Button fx:id="cancelBtn" mnemonicParsing="false">
 					<HBox.margin>
-						<Insets left="10.0" />
+						<Insets left="10.0" right="10.0" />
 					</HBox.margin>
 				</Button>
+            <Button fx:id="toggleAdminBtn" mnemonicParsing="false">
+               <HBox.margin>
+                  <Insets left="10.0" right="10.0" />
+               </HBox.margin></Button>
+            <Button fx:id="addNoteBtn" mnemonicParsing="false">
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin></Button>
 			</children>
 		</HBox>
 	</children>

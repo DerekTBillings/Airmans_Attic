@@ -3,24 +3,18 @@ package com.billings.controllers;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-
-
+import com.billings.jdbc.dao.EditAtticInfoPageDAO;
+import com.billings.jdbc.dao.EditAtticInfoPageInfoImpl;
 import com.billings.main.WindowController;
 import com.billings.resources.AdminPageResources;
-import com.billings.resources.CustomerInfoPageResources;
+import com.billings.resources.EditAtticInfoPageResources;
 import com.billings.resources.SignInPageResources;
 import com.billings.utils.FXMLFactory;
-
-
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 
 public class AdminPageController implements Initializable {
@@ -45,6 +39,8 @@ public class AdminPageController implements Initializable {
 	Button editItemBtn;
 	@FXML
 	Button editItemTypesBtn;
+	@FXML
+	Button editMessageBtn;
 	
 	
 	@Override
@@ -64,8 +60,16 @@ public class AdminPageController implements Initializable {
 		editAtticInfoBtn.setText(AdminPageResources.EDIT_ATTIC_INFO_BTN); 
 		editItemBtn.setText(AdminPageResources.EDIT_ITEM_BTN);
 		editItemTypesBtn.setText(AdminPageResources.EDIT_ITEM_TYPES_BTN);
+		editMessageBtn.setText(AdminPageResources.EDIT_MESSAGE_BTN);
+		atticInfo.setText(getAtticInfo());
 	}
 	
+	private String getAtticInfo() {
+		EditAtticInfoPageDAO dao = new EditAtticInfoPageInfoImpl();
+		
+		return dao.getInfo();
+	}
+
 	private void setupButtonEvents() {
 		setupRaffleAdminBtn();
 		setupCustomerLookupBtn();
@@ -73,6 +77,7 @@ public class AdminPageController implements Initializable {
 		setupEditAtticInfoBtn();
 		setupEditItemBtn();
 		setupEditItemTypesBtn();
+		setupEditMessageBtn();
 	}
 
 	private void setupRaffleAdminBtn() {
@@ -100,6 +105,8 @@ public class AdminPageController implements Initializable {
 
 	private void setupEditAtticInfoBtn() {		
 		editAtticInfoBtn.setOnAction(e -> {
+			EditAtticInfoPageResources.initializeWithAtticInfo();
+			
 			WindowController.createPopupWindow(
 					FXMLFactory.getEditAtticInfoPage());
 		});
@@ -118,9 +125,20 @@ public class AdminPageController implements Initializable {
 					FXMLFactory.getEditItemTypesPage());
 		});
 	}
+
+	private void setupEditMessageBtn() {
+		editMessageBtn.setOnAction(e ->{
+			EditAtticInfoPageResources.initializeWithAtticMessage();
+			
+			WindowController.createPopupWindow(
+					FXMLFactory.getEditAtticInfoPage());
+		});
+		
+	}
 	
 	private void setupAtticInfoField() {
 		atticInfo.setEditable(false);
+		AdminPageResources.bindInfoTextArea(atticInfo);
 	}
 
 }

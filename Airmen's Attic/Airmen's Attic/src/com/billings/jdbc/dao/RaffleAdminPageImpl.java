@@ -23,133 +23,82 @@ public class RaffleAdminPageImpl implements RaffleAdminPageDAO {
 
 	@Override
 	public List<RaffleItem> getRaffleItems(boolean doAddPendingFilter) {
-		String query = "";
+		String query = RaffleAdminPageSQL.getRaffleItems;
 		
-		if (doAddPendingFilter) {
+		if (doAddPendingFilter)
 			query = RaffleAdminPageSQL.getPendingRaffleItems;
-		} else {
-			query = RaffleAdminPageSQL.getRaffleItems;
-		}
 		
 		List<RaffleItem> raffleItems = getRaffleItems(query);
 		
+		populateWinners(raffleItems);
+		
 		return raffleItems;
 	}
 	
+	@SuppressWarnings("unchecked")
 	private List<RaffleItem> getRaffleItems(String query) {
-		List<RaffleItem> raffleItems = null;
-		
-		ResultSet results = SQLStatementUtils.executeQueryAndReturnResultSet(
-				query);
-		
-		try {
-			raffleItems = getRaffleItemsFromResults(results);
-		} catch(SQLException e) {
-			e.printStackTrace();
-		} finally {
-			SQLStatementUtils.closeConnectionsWithResultSet();
-		}
-		
-		return raffleItems;
+		return SQLStatementUtils.executeQuery(query, RaffleItem.class);
 	}
 
-	private List<RaffleItem> getRaffleItemsFromResults(ResultSet results) throws SQLException {
-		List<RaffleItem> raffleItems = new ArrayList<RaffleItem>();
-		
-		while(results.next()) {
-			RaffleItem item = Common.buildRaffleItemFromResults(results);
-			
+	private void populateWinners(List<RaffleItem> raffleItems) {
+		for (RaffleItem item : raffleItems) {			
 			Person winningCustomer = getRaffleItemWinner(item.getRaffleId());
-			item.setWinningCustomer(winningCustomer);
 			
-			raffleItems.add(item);
+			item.setWinningCustomer(winningCustomer);
 		}
-		
-		return raffleItems;
 	}
 	
 	private Person getRaffleItemWinner(int raffleId) {		
-		ResultSet results = SQLStatementUtils.executeQueryAndReturnResultSet(
-				RaffleAdminPageSQL.getWinnerForRaffleItem, raffleId);
+		String query = RaffleAdminPageSQL.getWinnerForRaffleItem;
 		
-		Person winner = null;
-		
-		try {
-			if (results.next()) {
-				winner = new Person();
-				
-				winner.setLastName(results.getString("Last_Name"));
-				winner.setFirstName(results.getString("First_Name"));
-				winner.setCellPhone(results.getString("Cell_Phone"));
-			}
-			
-		} catch(Exception e) {
-			Logger.log(e.getMessage());
-		}
-		
-		return winner;
+		return (Person)SQLStatementUtils.executeQueryForSingleRow(
+				query, Person.class, raffleId);
 	}
 
 	@Override
 	public List<Person> getPeopleInRaffleById(int raffleItemId) {
-		List<Person> peopleInRaffle = new ArrayList<Person>();
+		String query = RaffleAdminPageSQL.getPeopleForRaffleItem;
 		
-		ResultSet results = SQLStatementUtils.executeQueryAndReturnResultSet(
-			RaffleAdminPageSQL.getPeopleForRaffleItem, raffleItemId);
-		
-		try {
-			while(results.next()) {
-				Person loadedPerson = Common.buildPersonFromResults(results);
-				peopleInRaffle.add(loadedPerson);
-			}
-		} catch (SQLException e) {
-			Logger.log(e.getMessage());
-		} finally {
-			SQLStatementUtils.closeConnectionsWithResultSet();
-		}
-		
-		return peopleInRaffle;
+		return SQLStatementUtils.executeQuery(query, Person.class, raffleItemId);
 	}	
 
 	@Override
-	public boolean addPersonToRaffleForItem(int itemId, int personId) {
+	public boolean addPersonToRaffle(int itemId, int personId) {
 		boolean success = false;
-		boolean isPersonInRaffle = false;
 		
-		ResultSet results = SQLStatementUtils.executeQueryAndReturnResultSet(
-				RaffleAdminPageSQL.isPersonInRaffleForItem, itemId, personId);
+		String query = RaffleAdminPageSQL.isPersonInRaffleForItem;
 		
-		int resultCount = getCountfromResults(results);
+		int resultCount = (Integer)SQLStatementUtils.executeQueryForSingleCell(
+				query, Integer.class, itemId, personId);
 		
-		if (resultCount == 0) {
-			SQLStatementUtils.executeQueryWithoutResultSet(
-					RaffleAdminPageSQL.addPersonToRaffleForItem, itemId, personId);		
-			
-			Logger.notifyUser(Messages.CUSTOEMR_ADDED_TO_RAFFLE_QUEUE);
+		if (isCustomerInQueue(resultCount)) {
+			addPersonToRaffleForItem(itemId, personId);		
+			notifyCustomerOfSuccess();
 			success = true;
-			
 		} else {
-			Logger.notifyUser(Messages.CUSTOMER_ALREADY_IN_RAFFLE_QUEUE);
+			notifyCustomerAlreadyInQueue();
 			success = false;
 		}
 		
 		return success;
 	}
-	
-	private int getCountfromResults(ResultSet results) {
-		int count = 0;
+
+	private boolean isCustomerInQueue(int resultCount) {
+		return resultCount == 0;
+	}
+
+	private void addPersonToRaffleForItem(int itemId, int personId) {
+		String query = RaffleAdminPageSQL.addPersonToRaffleForItem;
 		
-		try {
-			if (results.next()) {
-				count = results.getInt(1);
-			}
-		} catch(Exception e) {
-			Logger.log(e.getMessage());
-		} finally {
-			SQLStatementUtils.closeConnectionsWithResultSet();
-		}
-		
-		return count;
+		SQLStatementUtils.executeInsert(query, itemId, personId);
+	}
+
+	private void notifyCustomerOfSuccess() {
+		Logger.notifyUser(Messages.CUSTOEMR_ADDED_TO_RAFFLE_QUEUE);
+	}
+
+	private void notifyCustomerAlreadyInQueue() {
+		Logger.notifyUser(Messages.CUSTOMER_ALREADY_IN_RAFFLE_QUEUE);
 	}
 
 	@Override
@@ -163,39 +112,24 @@ public class RaffleAdminPageImpl implements RaffleAdminPageDAO {
 		Person winner = raffleItem.getWinningCustomer();
 		int winnerId = winner.getPersonId();
 		
-		SQLStatementUtils.executeQueryWithoutResultSet(removeWinnerQuery, raffleItemId);
-		SQLStatementUtils.executeQueryWithoutResultSet(addWinnerQuery, raffleItemId, winnerId);
-		SQLStatementUtils.executeQueryWithoutResultSet(setRaffleDateQuery, raffleItemId);
+		SQLStatementUtils.executeUpdate(removeWinnerQuery, raffleItemId);
+		SQLStatementUtils.executeUpdate(addWinnerQuery, raffleItemId, winnerId);
+		SQLStatementUtils.executeUpdate(setRaffleDateQuery, raffleItemId);
 	}
 
 	@Override
 	public boolean isItemRaffled(int itemId) {
 		String query = RaffleAdminPageSQL.isItemRaffled;
 		
-		ResultSet rs = SQLStatementUtils.executeQueryAndReturnResultSet(query, itemId);
-
-		return isItemRaffled(rs);
-	}
-	
-	private boolean isItemRaffled(ResultSet rs) {
-		try {
-			if (rs.next()) {
-				return rs.getBoolean("status");
-			}
-		} catch(Exception e) {
-			Logger.log(e.getMessage());
-		} finally {
-			SQLStatementUtils.closeConnectionsWithResultSet();
-		}
-		
-		return false;
+		return (Boolean)SQLStatementUtils.executeQueryForSingleCell(
+				query, Boolean.class, itemId);
 	}
 
 	@Override
 	public void setItemAsOut(int itemId) {
 		String query = RaffleAdminPageSQL.setItemAsOut;
 		
-		SQLStatementUtils.executeQueryWithoutResultSet(query, itemId);
+		SQLStatementUtils.executeUpdate(query, itemId);
 	}
 
 }

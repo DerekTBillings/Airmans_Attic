@@ -1,0 +1,154 @@
+package com.billings.utils;
+
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.Collection;
+import java.util.Iterator;
+
+/**
+ * This class is used to execute database statements.
+ * The class uses PreparedStatements to execute queries.
+ * For unique statements, get a Connection from ConnManager
+ * and handle it in your class. Otherwise, this class will
+ * manage your calls.
+ * 
+ * Note* this class handles closing database connections 
+ * when there are no ResultSets to return.
+ * @author Derek Billings
+ *
+ */
+public class SQLStatementUtils_Backup {
+	
+	private static PreparedStatement preparedStatement;
+	private static ResultSet resultSet;
+	
+	private static String sqlQuery;
+	private static Object[] sqlParameters;
+	
+	public static ResultSet executeQueryAndReturnResultSet(
+			String query, Object... parameters) {
+		
+		sqlQuery = query;
+		sqlParameters = parameters;
+		
+		createAndPrepareStatement();
+		executeAndHandlePreparedStatementWithResultSet();
+		
+		return resultSet;
+	}
+	
+	public static ResultSet executeQueryAndReturnResultSet(
+			String query) {
+		sqlQuery = query;
+		sqlParameters = new Object[0];
+		
+		createAndPrepareStatement();
+		createPreparedStatement();
+		executeAndHandlePreparedStatementWithResultSet();
+		
+		return resultSet;
+	}
+	
+	public static void executeQueryWithoutResultSet(
+			String query, Object... parameters) {
+		
+		sqlQuery = query;
+		sqlParameters = parameters;
+		createAndPrepareStatement();
+		executeAndHandlePreparedStatement();
+		closeConnections();
+	}
+	
+	private static void executeAndHandlePreparedStatementWithResultSet() {
+		try {
+			executePreparedStatementWithResultSet();
+		} catch (Exception e) {
+			logSQLExceptionWithQueryInformation(e);
+		}
+	}
+	
+	private static void executePreparedStatementWithResultSet() throws SQLException {
+		resultSet = preparedStatement.executeQuery();
+	}
+	
+	private static void executeAndHandlePreparedStatement() {
+		try {
+			executePreparedStatement();
+		} catch(Exception e) {
+			logSQLExceptionWithQueryInformation(e);
+		}
+	}
+	
+	private static void executePreparedStatement() throws SQLException {
+		preparedStatement.execute();
+	}
+	
+	private static void logSQLExceptionWithQueryInformation(Exception e) {
+		StringBuffer parametersAsString = new StringBuffer();
+		for (Object parameter : sqlParameters) {
+			parametersAsString.append(parameter);
+			parametersAsString.append(": ");
+		}
+		
+		Logger.log("There was an issue with the SQL statement");
+		Logger.log("Query: "+sqlQuery);
+		Logger.log("Parameters: "+parametersAsString);
+		e.printStackTrace();
+	}
+	
+	private static void createAndPrepareStatement() {
+		createPreparedStatement();
+		populatePreparedStatementWithValues();
+	}
+	
+	private static void createPreparedStatement() {
+		preparedStatement = ConnManager.getPreparedStatement(sqlQuery);
+	}
+	
+	private static void populatePreparedStatementWithValues() {
+		int parameterIndex = 0; //begin with 0 so the index can increment with the loop
+		
+		for (Object parameter : sqlParameters) {
+			parameterIndex++;
+			populateAndHandlePreparedStatementValues(parameter, parameterIndex);
+		}
+	}
+	
+	private static void populateAndHandlePreparedStatementValues(Object parameter, int parameterIndex) {
+		try {
+			populatePreparedStatementValues(parameter, parameterIndex);
+		} catch(SQLException e) {
+			Logger.log("Could not set a sql parameter at index "+parameterIndex);
+			e.printStackTrace();
+		}
+	}
+	
+	private static void populatePreparedStatementValues(Object parameter, int parameterIndex) throws SQLException{
+		if (parameter == null) {
+			preparedStatement.setNull(parameterIndex, 1);
+			
+		} else if (parameter instanceof String) {
+			preparedStatement.setString(parameterIndex, (String) parameter);
+		
+		} else if (parameter instanceof Integer) {
+			Integer parameterAsInt = Integer.parseInt(parameter.toString());
+			preparedStatement.setInt(parameterIndex, parameterAsInt);
+		
+		} else if (parameter instanceof LocalDate) {
+			LocalDate localDate = (LocalDate)parameter;
+			Date convertedDate = Date.valueOf(localDate);
+			preparedStatement.setDate(parameterIndex, convertedDate);
+		}
+	}
+	
+	private static void closeConnections() {
+		ConnManager.closeDatabaseConnectionAndTools();
+	}
+	
+	public static void closeConnectionsWithResultSet() {
+		ConnManager.closeDatabaseConnectionAndTools(resultSet);
+	}
+}

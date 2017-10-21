@@ -2,7 +2,7 @@ package com.billings.jdbc.sql;
 
 public class RaffleAdminPageSQL {
 
-	public static final String getRaffleItems = "SELECT r.Raffle_Id, r.Name, r.Description, t.Type_Name, r.Status, r.Date_In, r.Date_Raffled, r.Date_To_Raffle "+ 
+	public static final String getRaffleItems = "SELECT r.Raffle_Id, r.Name, r.Description, t.Type_Name as type, r.Status, r.Date_In, r.Date_Raffled, r.Date_To_Raffle "+ 
 		"FROM raffle_item r "+
 		"INNER JOIN item_type t on r.Type_Id = t.Type_Id "+
 		"WHERE status = 'In' ";
@@ -43,7 +43,7 @@ public class RaffleAdminPageSQL {
 		"set date_raffled = sysdate() "+
 		"where raffle_id = ?";
 
-	public static String isItemRaffled = "SELECT date_raffled is not null as status "+
+	public static String isItemRaffled = "SELECT case when date_raffled is not null then 'true' else 'false' end as status "+
 			"FROM raffle_item "+
 			"WHERE raffle_id = ?";
 

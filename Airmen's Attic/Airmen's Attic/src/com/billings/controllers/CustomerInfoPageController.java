@@ -1,12 +1,26 @@
 package com.billings.controllers;
 
 import java.net.URL;
-import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
 
+import com.billings.events.implementation.CustomerInfoPageEditCustomer;
+import com.billings.events.interfaces.CustomerInfoPageEvents;
+import com.billings.jdbc.dao.AdminManagementDAO;
+import com.billings.jdbc.dao.AdminManagementImpl;
+import com.billings.jdbc.dao.CustomerInfoPageSetupDAO;
+import com.billings.jdbc.dao.CustomerInfoPageSetupImpl;
+import com.billings.jdbc.dto.Person;
+import com.billings.main.WindowController;
+import com.billings.resources.AdminManagementResources;
+import com.billings.resources.CustomerInfoPageResources;
+import com.billings.resources.EditAtticInfoPageResources;
+import com.billings.resources.SignInPageResources;
+import com.billings.utils.FXMLFactory;
+import com.billings.utils.InputValidation;
+import com.billings.utils.Logger;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -15,22 +29,9 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
-
-
-import com.billings.events.implementation.CustomerInfoPageEditCustomer;
-import com.billings.events.interfaces.CustomerInfoPageEvents;
-import com.billings.jdbc.dao.CustomerInfoPageSetupDAO;
-import com.billings.jdbc.dao.CustomerInfoPageSetupImpl;
-import com.billings.jdbc.dto.Person;
-import com.billings.main.WindowController;
-import com.billings.resources.CustomerInfoPageResources;
-import com.billings.resources.SignInPageResources;
-import com.billings.utils.FXMLFactory;
-import com.billings.utils.InputValidation;
 
 public class CustomerInfoPageController implements Initializable {
 
@@ -68,6 +69,10 @@ public class CustomerInfoPageController implements Initializable {
 	Button editSponsorInfoBtn;
 	@FXML
 	Button archiveCustomerBtn;
+	@FXML
+	Button toggleAdminBtn;
+	@FXML
+	Button addNoteBtn;
 	
 	private static Person person;
 	
@@ -89,12 +94,14 @@ public class CustomerInfoPageController implements Initializable {
 		setupEditSponsorInfoBtn();
 		setupCancelBtn();
 		setupArchiveCustomerBtn();
+		setupAddNoteBtn();
+		setupToggleAdminBtn();
 		
 		populateRankList();
 		
 		createRequiredFieldsList();
 	}
-	
+
 	private void createOrLoadPerson() {
 		if (CustomerInfoPageResources.LOAD_PERSON) {
 			person = getPersonInfo();
@@ -143,16 +150,19 @@ public class CustomerInfoPageController implements Initializable {
 		cancelBtn.setText(CustomerInfoPageResources.CANCEL_BTN);
 		editSponsorInfoBtn.setText(CustomerInfoPageResources.EDIT_SPONSOR_INFO_BTN);
 		archiveCustomerBtn.setText(CustomerInfoPageResources.ARCHIVE_CUSTOMER_BTN);
+		toggleAdminBtn.setText(CustomerInfoPageResources.TOGGLE_ADMIN_BTN);
+		addNoteBtn.setText(CustomerInfoPageResources.ADD_NOTE_BTN);
 	}
 	
 	private void removeNodesIfNecessary() {
-		if (CustomerInfoPageResources.REMOVE_DELTE_BTN) {
+		if (CustomerInfoPageResources.REMOVE_DELETE_BTN)
 			removeNode(archiveCustomerBtn);
-		}
-		
-		if (CustomerInfoPageResources.REMOVE_EDIT_SPONSOR_BTN) {
+		if (CustomerInfoPageResources.REMOVE_EDIT_SPONSOR_BTN)
 			removeNode(editSponsorInfoBtn);
-		}
+		if (CustomerInfoPageResources.REMOVE_ADD_NOTE_BTN)
+			removeNode(addNoteBtn);
+		if (CustomerInfoPageResources.REMOVE_TOGGLE_ADMIN_BTN)
+			removeNode(toggleAdminBtn);
 		
 		if (CustomerInfoPageResources.REMOVE_DEPENDENT_CHECK) {
 			removeNode(dependentCheckLbl);
@@ -270,7 +280,7 @@ public class CustomerInfoPageController implements Initializable {
 	
 	private void setupArchiveCustomerBtn() {
 		archiveCustomerBtn.setOnAction(e -> {
-			int personId = person.getPersonId();
+			int personId = getPersonId();
 			String archiveStatus = person.getArchiveStatus();
 			
 			((CustomerInfoPageEditCustomer)pageEvents).toggleCustomerArchive(personId, archiveStatus);
@@ -314,5 +324,55 @@ public class CustomerInfoPageController implements Initializable {
 		}
 		
 		return required;
+	}
+	
+	private void setupAddNoteBtn() {
+		addNoteBtn.setOnAction(e -> {
+			setupInfoPage();
+			openEditInfoPage();
+		});
+	}
+
+	private void setupInfoPage() {
+		EditAtticInfoPageResources.initializeWithPerson(getPersonId());
+	}
+
+	private int getPersonId() {
+		return person.getPersonId();
+	}
+
+	private void openEditInfoPage() {
+		WindowController.createPopupWindow(
+				FXMLFactory.getEditAtticInfoPage());
+	}
+
+	private void setupToggleAdminBtn() {
+		toggleAdminBtn.setOnAction(e -> {
+			if (person.isAdmin()) {
+				removeAdmin();
+				displayRemovalMessage();
+			}
+			else
+				makeAdmin();
+		});
+	}
+
+	private void removeAdmin() {
+		AdminManagementDAO dao = new AdminManagementImpl();
+		
+		dao.removeAdmin(person.getPersonId());
+		
+		person.setAdmin(false);
+	}
+	
+	private void displayRemovalMessage() {
+		Logger.notifyUser(AdminManagementResources.ADMIN_PRIVILEGES_REMOVED);
+	}
+	
+	private void makeAdmin() {
+		AdminManagementResources.setPerson(person);
+		
+		WindowController.createPopupWindow(
+				FXMLFactory.getAdminManagementPage());
 	}
 }

@@ -3,7 +3,7 @@ package com.billings.jdbc.sql;
 public class SignInPageSQL {
 	
 	private static final String findEmployeeByX = "SELECT DISTINCT customer.Person_Id AS personId, concat(customer.Last_Name, ' ' , customer.First_Name) AS customerName, "+
-		"   	customer.Cell_Phone AS cellPhone, "+
+		"   	customer.Cell_Phone AS contactInfo, "+
 		"		if (customer.Dependent_Status='Y', concat(sponsor.Last_Name, ' ', sponsor.First_Name), '') AS sponsorName "+
 		"	FROM person customer, person sponsor, person_link link "+
 		"	WHERE (%s %s) "+
@@ -22,7 +22,7 @@ public class SignInPageSQL {
 	public static final String findActiveCustomerByName = String.format(findEmployeeByX, findByName, findByActiveStatus);
 	public static final String findCustomerByName = String.format(findEmployeeByX, findByName, "");
 	
-	public static final String findCustomerNameById = "SELECT Last_Name, First_Name FROM person WHERE Person_Id = ?";
+	public static final String findCustomerNameById = "SELECT concat(first_name, ' ', last_name, ' (', rank, ')') FROM person WHERE Person_Id = ?";
 	
 	private static final String findOnlySponsors = "AND customer.Dependent_Status='N'";
 	
@@ -47,14 +47,23 @@ public class SignInPageSQL {
 		"	AND Time_Out is null "+
 		"   AND Time_In > CURDATE()";
 	
-	public static final String getCustomerHistory = "SELECT i.Name as Item_Name, r.Name as Raffle_Name, Quantity, Checkout_Date "+
-		"FROM checkout_history ch "+
-		"	INNER JOIN item i ON i.Item_Id = ch.Item_Id "+
-		"   LEFT JOIN raffle_item r ON r.Raffle_Id = ch.Raffle_Id "+
-		"WHERE ch.Person_Id = ? "+
-		"ORDER BY Checkout_Date DESC";
+	public static final String getCustomerHistory = "select item_name, quantity, substr(checkout_date, 1, instr(checkout_date, ' ')-1) as SQLDate "+
+			"from ( "+
+			"		select name as item_name, quantity, checkout_date, person_id "+
+			"		from checkout_history ch "+
+			"			inner join item i on ch.item_id = i.item_id "+
+			"		union "+
+			"		select name as item_name, '1', date_raffled, person_id "+
+			"		from raffle_item ri "+
+			"			inner join people_in_raffle pir on ri.raffle_id = pir.raffle_id) results "+
+			"where person_id = ?";
+	
 	
 	public static final String isCustomerAnAdmin = "SELECT count(Person_Id) AS count "+
 		"FROM admin_accounts "+
 		"WHERE Person_Id = ?";
+	
+	public static final String getCustomerName = "select concat(first_name, ' ', last_name) "+
+			"from person "+
+			"where person_id = ?";
 }

@@ -11,7 +11,7 @@ public interface RaffleAdminPageDAO {
 	
 	public List<Person> getPeopleInRaffleById(int raffleItemId);
 	
-	public boolean addPersonToRaffleForItem(int itemId, int personId);
+	public boolean addPersonToRaffle(int itemId, int personId);
 	
 	public void updateRaffleItemWinner(RaffleItem raffleItem);
 

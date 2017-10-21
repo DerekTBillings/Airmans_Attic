@@ -3,6 +3,7 @@ package com.billings.jdbc.dto;
 public class Person {
 	
 	private int personId;
+	
 	private String firstName;
 	private String lastName;
 	private String rank;
@@ -10,11 +11,11 @@ public class Person {
 	private String cellPhone;
 	private String archiveStatus;
 	
+	private boolean isAdmin;
+	
 	private Person sponsor;
 	
-	public Person() {
-		
-	}
+	public Person() {}
 	
 	public Person(String firstName, String lastName, String rank, 
 			String dependentStatus, String cellPhone) {
@@ -86,6 +87,12 @@ public class Person {
 	}
 	public void setArchiveStatus(String archiveStatus) {
 		this.archiveStatus = archiveStatus;
+	}
+	public boolean isAdmin() {
+		return isAdmin;
+	}
+	public void setAdmin(boolean isAdmin) {
+		this.isAdmin = isAdmin;
 	}
 	
 }

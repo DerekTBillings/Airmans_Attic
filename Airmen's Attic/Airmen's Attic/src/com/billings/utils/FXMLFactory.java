@@ -85,4 +85,12 @@ public class FXMLFactory {
 	public static String getEditItemTypesPage() {
 		return fxmlPackagePath+"EditItemTypesPage.fxml";
 	}
+	
+	public static String getAdminManagementPage() {
+		return fxmlPackagePath+"AdminManagement.fxml";
+	}
+
+	public static String getReportResultsPage() {
+		return fxmlPackagePath+"ReportResults.fxml";
+	}
 }

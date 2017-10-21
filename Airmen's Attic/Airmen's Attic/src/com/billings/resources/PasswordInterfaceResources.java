@@ -1,9 +1,9 @@
 package com.billings.resources;
 
 import com.billings.events.implementation.PasswordInterfacePageEventsImpl;
-import com.billings.jdbc.dao.PasswordInterfaceDAOAdminImpl;
+import com.billings.jdbc.dao.PasswordInterfaceAdminImpl;
 import com.billings.jdbc.dao.PasswordInterfaceDAO;
-import com.billings.jdbc.dao.PasswordInterfaceDAOKeyHolderImpl;
+import com.billings.jdbc.dao.PasswordInterfaceKeyHolderImpl;
 
 public class PasswordInterfaceResources {
 
@@ -33,14 +33,14 @@ public class PasswordInterfaceResources {
 	
 	public static PasswordInterfaceDAO getPageDAO() {
 		if (pageDAO == null) {
-			pageDAO = new PasswordInterfaceDAOKeyHolderImpl();
+			pageDAO = new PasswordInterfaceKeyHolderImpl();
 		}
 		
 		return pageDAO;
 	}
 	
 	public static void setupPageForAdmins() { 
-		pageDAO = new PasswordInterfaceDAOAdminImpl();
+		pageDAO = new PasswordInterfaceAdminImpl();
 		doPageRedirect = true;
 		doAnnotateResults = false;
 	}

@@ -1,17 +1,12 @@
 package com.billings.events.implementation;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import com.billings.events.interfaces.SignInPageEvents;
 import com.billings.jdbc.dto.FoundCustomer;
 import com.billings.jdbc.factory.SignInPageFactory;
-import com.billings.jdbc.sql.SignInPageSQL;
 import com.billings.resources.CustomerInfoPageResources;
 import com.billings.resources.SelectCustomerPageResources;
-import com.billings.resources.SignInPageResources;
-import com.billings.utils.Logger;
-import com.billings.utils.Messages;
 
 public class SignInPageEventsCommon extends SignInPageEvents {
 

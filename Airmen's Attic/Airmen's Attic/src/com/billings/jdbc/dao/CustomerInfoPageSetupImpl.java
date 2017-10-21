@@ -15,80 +15,22 @@ public class CustomerInfoPageSetupImpl implements CustomerInfoPageSetupDAO {
 
 	@Override
 	public List<String> getRankList() {
-		List<String> rankList = null;
+		String query = CustomerInfoPageSetupSQL.getRankList;
 		
-		ResultSet results = SQLStatementUtils.executeQueryAndReturnResultSet(
-				CustomerInfoPageSetupSQL.getRankList);
-		
-		try {
-			rankList = getRankListFromResults(results);
-		} catch(SQLException e) {
-			e.printStackTrace();
-		} finally {
-			SQLStatementUtils.closeConnectionsWithResultSet();
-		}
-		
-		return rankList;
+		return SQLStatementUtils.executeQuery(query, String.class);
 	}
 
-	private List<String> getRankListFromResults(ResultSet results) throws SQLException{
-		List<String> rankList = new ArrayList<String>();
-		
-		while(results.next()) {
-			String rankOption = results.getString("Value");
-			rankList.add(rankOption);
-		}
-		
-		return rankList;
-	}
-	
 	public List<String> getRequiredFields() {
-		List<String> requiredFieldsList = null;
+		String query = CustomerInfoPageSetupSQL.getRequiredFieldsList;
 		
-		ResultSet results = SQLStatementUtils.executeQueryAndReturnResultSet(
-				CustomerInfoPageSetupSQL.getRequiredFieldsList);
-		
-		try {
-			requiredFieldsList = getRequiredFieldsListFromResults(results);
-		} catch(SQLException e) {
-			e.printStackTrace();
-		} finally {
-			SQLStatementUtils.closeConnectionsWithResultSet();
-		}
-		
-		return requiredFieldsList;
-	}
-
-	private List<String> getRequiredFieldsListFromResults(ResultSet results) throws SQLException {
-		List<String> requiredFieldsList = new ArrayList<String>();
-		
-		while(results.next()) {
-			String requiredField = results.getString("Value");
-			requiredFieldsList.add(requiredField);
-		}
-		
-		return requiredFieldsList;
+		return SQLStatementUtils.executeQuery(query, String.class);
 	}
 
 	@Override
 	public Person getPersonInfoById(int personId) {
-		Person person = null;
+		String query = CustomerInfoPageSetupSQL.getPersonById;
 		
-		ResultSet results = SQLStatementUtils.executeQueryAndReturnResultSet(
-				CustomerInfoPageSetupSQL.getPersonById, personId);
-		
-		try {
-			if (results.next()) {
-				person = Common.buildPersonFromResults(results);
-				person.setArchiveStatus(results.getString("Archive_Status"));
-			}
-		} catch(Exception e) {
-			Logger.log(e.getMessage());
-		} finally {
-			SQLStatementUtils.closeConnectionsWithResultSet();
-		}
-		
-		return person;
+		return (Person)SQLStatementUtils.executeQueryForSingleRow(query, Person.class, personId);
 	}
 	
 	

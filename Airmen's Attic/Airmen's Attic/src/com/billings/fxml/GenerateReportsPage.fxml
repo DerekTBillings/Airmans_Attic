@@ -6,13 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity"
-	minHeight="-Infinity" minWidth="-Infinity" prefHeight="292.0"
-	prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-	fx:controller="com.billings.controllers.GenerateReportsPageController"
-	stylesheets="@../stylesheets/CommonStylesheet.css"
-	styleClass="blackAndWhiteTheme">
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="292.0" prefWidth="377.0" styleClass="blackAndWhiteTheme" stylesheets="@../stylesheets/CommonStylesheet.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.billings.controllers.GenerateReportsPageController">
 	<children>
 		<Label fx:id="pageHeaderLbl" text="Generate Reports Page">
 			<VBox.margin>
@@ -21,9 +15,7 @@
 		</Label>
 		<TableView fx:id="reportTable" prefHeight="161.0" prefWidth="600.0">
 			<columns>
-				<TableColumn fx:id="reportName" prefWidth="217.0" text="Report Name" />
-				<TableColumn fx:id="reportDescription" prefWidth="382.0"
-					text="Report Description" />
+				<TableColumn fx:id="reportName" prefWidth="350.0" text="Report Name" />
 			</columns>
 			<VBox.margin>
 				<Insets left="10.0" right="10.0" />
@@ -31,7 +23,7 @@
 		</TableView>
 		<HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
 			<children>
-				<Button fx:id="generateBtn" mnemonicParsing="false" text="Generate Report">
+				<Button fx:id="generateBtn" mnemonicParsing="false" text="Generate">
 					<HBox.margin>
 						<Insets right="10.0" />
 					</HBox.margin>

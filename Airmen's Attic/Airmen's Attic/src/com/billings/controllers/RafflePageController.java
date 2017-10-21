@@ -101,7 +101,7 @@ public class RafflePageController implements Initializable {
 	private boolean addPersonToRaffle(int raffleId, int personId) {
 		RaffleAdminPageDAO dao = new RaffleAdminPageImpl();
 		
-		return dao.addPersonToRaffleForItem(raffleId, personId);
+		return dao.addPersonToRaffle(raffleId, personId);
 	}
 	
 	private void closeThisPage() {

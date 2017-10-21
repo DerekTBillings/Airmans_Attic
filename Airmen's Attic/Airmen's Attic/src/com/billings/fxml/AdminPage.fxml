@@ -38,6 +38,7 @@
 										<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
 										<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
 									</rowConstraints>
 									<children>
 										<Button fx:id="raffleAdminBtn" mnemonicParsing="false" GridPane.halignment="CENTER" />
@@ -46,6 +47,7 @@
 										<Button fx:id="editAtticInfoBtn" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                   <Button fx:id="editItemBtn" mnemonicParsing="false" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
                   <Button fx:id="editItemTypesBtn" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                  <Button fx:id="editMessageBtn" mnemonicParsing="false" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
 									</children>
 								</GridPane>
 							</children>

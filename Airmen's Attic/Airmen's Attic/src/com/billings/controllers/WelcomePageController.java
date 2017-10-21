@@ -3,13 +3,13 @@ package com.billings.controllers;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-
+import com.billings.jdbc.dao.EditAtticInfoPageDAO;
+import com.billings.jdbc.dao.EditAtticInfoPageMessageImpl;
 import com.billings.main.WindowController;
 import com.billings.resources.PasswordInterfaceResources;
 import com.billings.resources.SignInPageResources;
 import com.billings.resources.WelcomePageResources;
 import com.billings.utils.FXMLFactory;
-
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -124,7 +124,15 @@ public class WelcomePageController implements Initializable {
 	}
 	
 	private void setupAnnouncementsTextArea() {
-		announcementsTextArea.disableProperty().set(true);
+		announcementsTextArea.setEditable(false);
+		announcementsTextArea.setText(getAtticMessage());
+		WelcomePageResources.bindMessageTextArea(announcementsTextArea);
+	}
+	
+	private String getAtticMessage() {
+		EditAtticInfoPageDAO dao = new EditAtticInfoPageMessageImpl();
+		
+		return dao.getInfo();
 	}
 	
 	

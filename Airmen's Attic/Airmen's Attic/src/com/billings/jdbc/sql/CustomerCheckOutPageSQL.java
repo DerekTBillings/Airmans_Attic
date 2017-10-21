@@ -2,7 +2,7 @@ package com.billings.jdbc.sql;
 
 public class CustomerCheckOutPageSQL {
 	
-	public static final String getCheckoutItemList = "SELECT i.Item_Id, i.Name, t.Type_Name AS Type "+
+	public static final String getCheckoutItemList = "SELECT i.Item_Id, i.Name as item_name, t.Type_Name AS item_type "+
 		"FROM item i "+
 		"  INNER JOIN item_type t ON i.Type_Id = t.Type_Id "+
 		"WHERE i.is_archived = 'N' "+
@@ -12,7 +12,7 @@ public class CustomerCheckOutPageSQL {
 		"(Person_Id, Item_Id, Raffle_Id, Quantity, Checkout_Date)  "+
 		"VALUES";
 	
-	public static final String inserCheckoutItemHistoryValues = " (?, ?, null, ?, CURDATE())";
+	public static final String insertCheckoutItemHistoryValues = " (?, ?, null, ?, CURDATE())";
 	
 	public static final String customerSignOut = "UPDATE sign_in_history "+
 		"SET Time_Out = NOW() "+
