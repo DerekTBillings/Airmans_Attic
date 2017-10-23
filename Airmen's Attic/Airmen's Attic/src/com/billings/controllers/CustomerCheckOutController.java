@@ -20,9 +20,12 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TableView.TableViewSelectionModel;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 
 import com.billings.jdbc.dao.CustomerCheckOutPageDAO;
 import com.billings.jdbc.dao.CustomerCheckOutPageImpl;
+import com.billings.jdbc.dao.EditAtticInfoPageDAO;
+import com.billings.jdbc.dao.EditAtticInfoPagePersonImpl;
 import com.billings.jdbc.dto.CheckoutHistoryItem;
 import com.billings.jdbc.dto.CheckoutItem;
 import com.billings.main.WindowController;
@@ -32,7 +35,6 @@ import com.billings.utils.Common;
 import com.billings.utils.FXMLFactory;
 
 public class CustomerCheckOutController implements Initializable {
-
 
 	@FXML
 	Label checkOutLbl;

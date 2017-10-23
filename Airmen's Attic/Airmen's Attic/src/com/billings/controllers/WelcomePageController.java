@@ -5,10 +5,12 @@ import java.util.ResourceBundle;
 
 import com.billings.jdbc.dao.EditAtticInfoPageDAO;
 import com.billings.jdbc.dao.EditAtticInfoPageMessageImpl;
+import com.billings.jdbc.dao.EditAtticInfoPagePersonImpl;
 import com.billings.main.WindowController;
 import com.billings.resources.PasswordInterfaceResources;
 import com.billings.resources.SignInPageResources;
 import com.billings.resources.WelcomePageResources;
+import com.billings.utils.Common;
 import com.billings.utils.FXMLFactory;
 
 import javafx.fxml.FXML;

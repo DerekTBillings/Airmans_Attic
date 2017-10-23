@@ -2,6 +2,7 @@ package com.billings.jdbc.dao;
 
 import com.billings.jdbc.sql.SignInPageSQL;
 import com.billings.resources.SignInPageResources;
+import com.billings.utils.Common;
 import com.billings.utils.Logger;
 import com.billings.utils.Messages;
 import com.billings.utils.SQLStatementUtils;
@@ -17,7 +18,7 @@ public class SignInPageCommon extends SignInPageDAO {
 		String role = SignInPageResources.ROLE_CUSTOMER;
 		
 		if (!super.isCustomerSignedIn(personId, role)) {
-			if (areRulesAccepted() && isNoteAccepted(personId)) 
+			if (areRulesAccepted()) 
 				Logger.notifyUser(signIn(personId, role));
 			
 		} else {
@@ -26,35 +27,7 @@ public class SignInPageCommon extends SignInPageDAO {
 	}
 
 	private boolean areRulesAccepted() {
-		return confirmPrompt(Messages.RULES_ACKNOWLEDGEMENT);
-	}
-	
-	private boolean confirmPrompt(String message) {
-		Alert alert = getConfirmPrompt(message);
-		
-		alert.showAndWait();
-
-		return alert.getResult() == ButtonType.YES;
-	}
-
-	private Alert getConfirmPrompt(String message) {
-		return new Alert(AlertType.CONFIRMATION, message, 
-				ButtonType.YES, ButtonType.NO);
-	}
-
-	private boolean isNoteAccepted(int personId) {
-		String note = getCustomerNote(personId);
-		
-		if (!note.isEmpty())
-			return confirmPrompt("Admin Note:\r\n"+note);
-		
-		return true;
-	}
-
-	private String getCustomerNote(int personId) {
-		EditAtticInfoPageDAO dao = new EditAtticInfoPagePersonImpl(personId);
-		
-		return dao.getInfo();
+		return Common.confirmPrompt(Messages.RULES_ACKNOWLEDGEMENT);
 	}
 
 	private String signIn(int personId, String role) {

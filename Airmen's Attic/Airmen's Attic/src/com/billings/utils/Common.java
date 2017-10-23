@@ -12,6 +12,9 @@ import com.billings.jdbc.dto.Person;
 import com.billings.jdbc.dto.RaffleItem;
 
 import javafx.event.EventTarget;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Alert.AlertType;
 
 public class Common {
 	
@@ -77,6 +80,19 @@ public class Common {
 		}
 		
 		return false;
+	}
+	
+	public static boolean confirmPrompt(String message) {
+		Alert alert = getConfirmPrompt(message);
+		
+		alert.showAndWait();
+
+		return alert.getResult() == ButtonType.YES;
+	}
+
+	private static Alert getConfirmPrompt(String message) {
+		return new Alert(AlertType.CONFIRMATION, message, 
+				ButtonType.YES, ButtonType.NO);
 	}
 	
 }

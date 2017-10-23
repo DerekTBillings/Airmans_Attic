@@ -10,6 +10,7 @@ import com.billings.jdbc.sql.SignInPageSQL;
 import com.billings.main.WindowController;
 import com.billings.resources.CustomerCheckOutPageResources;
 import com.billings.resources.SignInPageResources;
+import com.billings.utils.Common;
 import com.billings.utils.FXMLFactory;
 import com.billings.utils.Logger;
 import com.billings.utils.Messages;
@@ -28,14 +29,30 @@ public class SignInPageCustomerCheckout extends SignInPageDAO {
 		String role = SignInPageResources.ROLE_EITHER;
 		
 		if (super.isCustomerSignedIn(personId, role)) {
-			getCustomerHistory();
-			getCustomerName();
-			setupCheckOutPage();
-			navigateToCheckOut();
+			if (isNoteAccepted(personId)) {
+				getCustomerHistory();
+				getCustomerName();
+				setupCheckOutPage();
+				navigateToCheckOut();
+			}
 		} else {
 			Logger.notifyUser(Messages.CUSTOMER_NOT_SIGNED_IN);
 		}
+	}
+
+	private boolean isNoteAccepted(int personId) {
+		String note = getCustomerNote(personId);
 		
+		if (!note.isEmpty())
+			return Common.confirmPrompt("Admin Note:\r\n"+note);
+		
+		return true;
+	}
+
+	private String getCustomerNote(int personId) {
+		EditAtticInfoPageDAO dao = new EditAtticInfoPagePersonImpl(personId);
+		
+		return dao.getInfo();
 	}
 	
 	private void getCustomerHistory() {

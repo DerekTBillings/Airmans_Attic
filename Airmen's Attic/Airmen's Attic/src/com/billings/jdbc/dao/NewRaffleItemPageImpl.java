@@ -1,5 +1,6 @@
 package com.billings.jdbc.dao;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -30,10 +31,14 @@ public class NewRaffleItemPageImpl implements NewRaffleItemPageDAO {
 		String name = addRaffleItem.getName();
 		String type = addRaffleItem.getType();
 		String description = addRaffleItem.getDescription();
-		LocalDate dateToRaffle = addRaffleItem.getDateToRaffle();
+		Date dateToRaffle = getSQLDate(addRaffleItem);
 		
 		SQLStatementUtils.executeInsert(
 				query, name, description, type, dateToRaffle);
+	}
+
+	private Date getSQLDate(RaffleItem addRaffleItem) {
+		return Date.valueOf(addRaffleItem.getDateToRaffle());
 	}
 
 	@Override
@@ -43,7 +48,7 @@ public class NewRaffleItemPageImpl implements NewRaffleItemPageDAO {
 		String name = raffleItem.getName();
 		String description = raffleItem.getDescription();
 		String typeName = raffleItem.getType();
-		LocalDate dateToRaffle = raffleItem.getDateToRaffle();
+		Date dateToRaffle = getSQLDate(raffleItem);
 		
 		return (Integer)SQLStatementUtils.executeQueryForSingleCell(
 				query, Integer.class, 

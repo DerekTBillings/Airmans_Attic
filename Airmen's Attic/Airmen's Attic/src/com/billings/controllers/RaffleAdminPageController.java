@@ -212,14 +212,17 @@ public class RaffleAdminPageController implements Initializable {
 	private void setupRaffleItemBtn() {
 		raffleItemBtn.setOnAction(e -> {
 			ObservableList<Person> peopleInRaffle = RaffleAdminPageResources.personsInRaffleTbl;
-			int countPeopleInQueue = peopleInRaffle.size();
 			
-			int winningIndex = (int)(Math.random() * countPeopleInQueue);
-			
-			Person winner = peopleInRaffle.get(winningIndex);
-			
-			saveWinner(winner);
-			displayWinner();
+			if (!peopleInRaffle.isEmpty()) {
+				int countPeopleInQueue = peopleInRaffle.size();
+				
+				int winningIndex = (int)(Math.random() * countPeopleInQueue);
+				
+				Person winner = peopleInRaffle.get(winningIndex);
+				
+				saveWinner(winner);
+				displayWinner();
+			}
 		});
 	}
 	
